@@ -7,27 +7,29 @@
 ## 目录结构
 
 ```
-skyrmion_cnn_simulation/
-├── src/                                  # 源代码
-│   ├── config.py                         # 全部仿真参数 (对齐论文 Table 1)
-│   ├── ansatz.py                         # Task 2-1: toron 三维解析 ansatz
-│   ├── frank_osseen.py                   # Task 2-2: Frank-Oseen 自由能积分
-│   ├── pom_imaging.py                    # Task 2-3: Jones 矩阵 POM 成像
-│   ├── dataset_generator.py              # Task 2-4,2-5: 批量生成 + 数据集划分
-│   ├── visualize.py                      # Task 2-6: 数据校验可视化
-│   ├── pde_relaxation.py                 # 可选: PDE 松弛求解器
-│   ├── main.py                           # 模块1: 最小验证 demo
-│   ├── check_trends.py                   # 定性物理趋势自动校验
-│   └── check_deliverables.py             # 交付物完整性校验
+.
+├── README.md                  # 项目说明（仓库根目录）
+├── src/                       # 源代码
+│   ├── config.py              # 全部仿真参数 (对齐论文 Table 1)
+│   ├── ansatz.py              # Task 2-1: toron 三维解析 ansatz
+│   ├── frank_osseen.py        # Task 2-2: Frank-Oseen 自由能积分
+│   ├── pom_imaging.py         # Task 2-3: Jones 矩阵 POM 成像
+│   ├── dataset_generator.py   # Task 2-4,2-5: 批量生成 + 数据集划分
+│   ├── visualize.py           # Task 2-6: 数据校验可视化
+│   ├── pde_relaxation.py      # 可选: PDE 松弛求解器
+│   ├── main.py                # 模块1: 最小验证 demo
+│   ├── check_trends.py        # 定性物理趋势自动校验
+│   └── check_deliverables.py  # 交付物完整性校验
 ├── outputs/
 │   ├── dataset/
-│   │   ├── pom_images/                   # POM 灰度图 (300x300 PNG, 训练用)
-│   │   ├── labels/                       # csv 标签文件
-│   │   └── splits/                       # train/val/test 划分 csv
-│   └── visualizations/                   # 截面图、趋势图；presentation/ 为报告展示图
-├── s41598-025-89699-2.pdf                # 原论文
-├── README.md                             # 本文件
-└── dataset_readme.md                     # 数据集交付说明（给成员 B）
+│   │   ├── pom_images/        # POM 灰度图 (300x300 PNG, 训练用)
+│   │   ├── labels/            # csv 标签文件
+│   │   └── splits/            # train/val/test 划分 csv
+│   └── visualizations/        # 截面图、趋势图；presentation/ 为报告展示图
+└── docs/                      # 文档目录
+    ├── s41598-025-89699-2.pdf # 原论文
+    ├── dataset_readme.md      # 数据集交付说明（给成员 B）
+    └── skyrmion_simulation_README.md  # 本文件
 ```
 
 ## 环境依赖
@@ -59,6 +61,8 @@ python visualize.py
 # 5. 完整数据集生成（单 toron 88 张 + 双 toron 880 张，约 4 小时）
 python dataset_generator.py --mode all --n_voltages 8
 ```
+
+> 脚本依赖 `config.py` 中相对路径 `../outputs`，需在 `src/` 目录下运行。
 
 ## 任务清单与对应文件
 
@@ -119,7 +123,7 @@ python dataset_generator.py --mode all --n_voltages 8
 - 正确表述："对解析 ansatz 构型做 Frank-Oseen 自由能体积积分，作为标签"；
 - 错误表述："得到 Frank-Oseen 极小化的自由能"、"复现 Frank-Oseen 松弛得到平衡态解"。
 
-训练图片（pom_images/）保持原始灰度；visualizations/presentation/ 下的伪彩展示图仅用于报告，不得送入 CNN。
+训练图片（outputs/dataset/pom_images/）保持原始灰度；outputs/visualizations/presentation/ 下的伪彩展示图仅用于报告，不得送入 CNN。
 
 ## 数据集规模
 
