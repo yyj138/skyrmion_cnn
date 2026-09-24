@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+message: >-
+  If you use this code or the accompanying dataset, please cite the original
+  paper listed under "references" and this repository.
+
+title: >-
+  Liquid-crystal skyrmion CNN analysis: physical simulation, POM dataset
+  engineering, and CNN-based parameter inversion
+
+abstract: >-
+  Reproduction of the methodology of Terroa, Tasinkevych & Dias (Scientific
+  Reports 15:10921, 2025) for liquid-crystal skyrmions. The repository contains
+  two self-contained sub-projects: (1) a physical simulation and dataset
+  pipeline that generates 968 grayscale 300x300 polarised optical microscopy
+  (POM) images together with pitch, voltage and Frank-Oseen free-energy labels;
+  and (2) a convolutional neural network pipeline with three Keras
+  architectures that invert those POM textures back into pitch, applied voltage
+  and free energy across seven classification / regression tasks.
+
+type: software
+
+authors:
+  # 建议在此填入两位成员的真实姓名（CFF 允许 person 条目，含 family-names / given-names）。
+  # 当前使用项目实体名，避免误填。
+  - name: "Undergraduate Innovation and Entrepreneurship Training Program — Nematic Liquid Crystal Topological Defects Project"
+
+repository-code: "https://github.com/JaydenChen0110/nematic-liquid-crystal-topological-defects"
+
+keywords:
+  - liquid crystals
+  - skyrmion
+  - toron
+  - topological defects
+  - convolutional neural network
+  - polarised optical microscopy
+  - Frank-Oseen free energy
+  - parameter inversion
+  - reproducibility
+
+references:
+  - type: article
+    title: >-
+      Convolutional neural network analysis of optical texture patterns in
+      liquid-crystal skyrmions
+    authors:
+      - family-names: "Terroa"
+      - family-names: "Tasinkevych"
+        given-names: "M."
+      - family-names: "Dias"
+        given-names: "C. S."
+    journal: "Scientific Reports"
+    volume: 15
+    start: 10921
+    year: 2025
+    doi: "10.1038/s41598-025-89699-2"
+    url: "https://doi.org/10.1038/s41598-025-89699-2"

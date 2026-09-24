@@ -1,0 +1,13 @@
+# 斯格明子 CNN 复现项目依赖
+# 版本已按 Python 3.11（用户虚拟环境，dry-run 解析验证）与 3.13（开发冒烟测试）双验证
+# 安装：pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+tensorflow-cpu==2.21.0   # Keras 3 内含于 TF，论文原始实现同为 Keras（Fig.2f/3b/3e 由 visualkeras 生成）
+
+# numpy 2.5.x 起要求 Python >=3.12；3.11 最高可用 2.4.6（2.4.0 已被官方 yank）
+numpy==2.4.6; python_version < "3.12"
+numpy==2.5.1; python_version >= "3.12"
+
+pandas==3.0.3
+pillow==12.3.0
+matplotlib==3.11.1

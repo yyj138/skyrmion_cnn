@@ -1,0 +1,42 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---------- 虚拟环境 ----------
+venv/
+.venv/
+env/
+.env
+.conda/
+
+# ---------- 缓存 / 测试 ----------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ---------- 冒烟测试临时目录（cnn-inversion/src/_smoke/）----------
+_smoke/
+
+# ---------- 编辑器 / IDE ----------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---------- 操作系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- 说明 ----------
+# 以下内容【有意纳入版本控制】，不在此忽略：
+#   cnn-inversion/runs/**/model.keras     训练好的模型权重（单文件 1.5-2.6 MB）
+#   simulation-dataset/outputs/dataset/   968 张 POM 灰度图 + 标签 CSV + 划分表
+#   paper/*.pdf                           参考文献原文

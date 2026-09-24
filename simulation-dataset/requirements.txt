@@ -1,0 +1,16 @@
+# simulation-dataset 子项目依赖 —— 物理仿真 / POM 成像 / 数据集生成
+# 安装：pip install -r requirements.txt
+#
+# 说明：版本与 ../cnn-inversion/requirements.txt 保持一致的数值库对齐，
+#       便于在同一环境中同时跑通两个子项目。
+
+numpy==2.4.6; python_version < "3.12"
+numpy==2.5.1; python_version >= "3.12"
+
+matplotlib==3.11.1   # 校验可视化（截面图、POM gallery、标签分布、趋势图）
+pillow==12.3.0       # POM 灰度 PNG 读写
+
+tqdm>=4.60           # dataset_generator.py 的批量生成进度条（无 API 变更风险，故不锁定）
+
+# 注：本子项目不使用 pandas（CSV 读写走标准库 csv），故未列入。
+# 注：pde_relaxation.py 为可选模块，依赖已包含在上面的 numpy 中，无额外要求。
