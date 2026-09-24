@@ -36,7 +36,7 @@
 | 评估和绘图程序 | `cnn-inversion/src/evaluate.py` |
 | 快速自检程序 | `cnn-inversion/src/smoke_test.py` |
 | 依赖环境 | `cnn-inversion/requirements.txt` |
-| 数据集及划分 | `simulation-dataset/outputs/dataset/` |
+| 数据集及划分 | 成员 A 的分支 `roleA` 的 `outputs/dataset/`（不在本分支内） |
 | 模型、日志、指标和图片 | `cnn-inversion/runs/` |
 | 论文结构选择说明 | `docs/PAPER_BASIS.md` |
 | 训练记录 | `docs/TRAINING_RECORD.md` |

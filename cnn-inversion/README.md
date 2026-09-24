@@ -5,7 +5,7 @@
 **论文**：Terroa, Tasinkevych & Dias, *Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions*, **Scientific Reports 15:10921 (2025)**.
 DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) ｜ 原文副本：[`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)
 
-**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`../simulation-dataset/outputs/dataset/`](../simulation-dataset/outputs/dataset/)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [`../simulation-dataset/DATASET.md`](../simulation-dataset/DATASET.md)。
+**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`roleA` 分支的 `outputs/dataset/`](https://github.com/yyj138/skyrmion_cnn/tree/roleA/outputs/dataset)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [A 的 `docs/dataset_readme.md`](https://github.com/yyj138/skyrmion_cnn/tree/roleA/docs/dataset_readme.md)。
 
 ---
 
@@ -19,7 +19,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 | `src/evaluate.py` | 测试集评估：loss 曲线、混淆矩阵（分类）、pred_vs_true 散点（带 1:1 线 + 标准差阴影，复刻 Fig.3d/3g 图注风格）；输出 `metrics.json`。 |
 | `src/smoke_test.py` | 端到端冒烟测试：用合成数据跑通三个模型（不需要真实数据集，秒级完成）。 |
 | `requirements.txt` | 锁定版本依赖：`tensorflow-cpu==2.21.0`、`numpy`、`pandas`、`pillow`、`matplotlib`。 |
-| `data/` | 成员 B 派生的数据划分表：`split_pitch_classification_single_stratified.csv`（① 任务使用，按类别分层抽样，保证 train/val/test 均覆盖全部 11 个 η 类别）。其余划分表由成员 A 提供，见 `../simulation-dataset/outputs/dataset/splits/`。 |
+| `data/` | 成员 B 派生的数据划分表：`split_pitch_classification_single_stratified.csv`（① 任务使用，按类别分层抽样，保证 train/val/test 均覆盖全部 11 个 η 类别）。其余划分表由成员 A 提供，见 [`roleA` 分支的 `outputs/dataset/splits/`](https://github.com/yyj138/skyrmion_cnn/tree/roleA/outputs/dataset/splits)。 |
 | `runs/` | 7 个正式训练任务的输出，每个目录含 `model.keras`、`meta.json`、`metrics.json`、`training_log.csv`、`loss_curve.png`、`confusion_matrix.png`（分类）或 `pred_vs_true.png`（回归）。 |
 
 > 代码逐行的论文依据、14 条论文未写明的实现假设（ASSUMPTION）、⑦ 任务的失败与修复全过程见 [`../docs/PAPER_BASIS.md`](../docs/PAPER_BASIS.md)；完整训练与诊断过程见 [`../docs/TRAINING_RECORD.md`](../docs/TRAINING_RECORD.md)。
@@ -86,7 +86,7 @@ python src/smoke_test.py
 
 ```bash
 cd cnn-inversion
-DS=../simulation-dataset/outputs/dataset
+DS=../_roleA/outputs/dataset     # 由 A 的分支克隆而来，见下方说明
 
 # 1) 螺距分类（单 toron）
 python src/train.py --task pitch --csv $DS/labels/labels_single.csv --images $DS/pom_images --split-csv data/split_pitch_classification_single_stratified.csv --out runs/pitch_final --patience 30 --epochs 250
@@ -150,4 +150,4 @@ python src/evaluate.py --run runs/mixed_pitch_final
 - [`../docs/PAPER_BASIS.md`](../docs/PAPER_BASIS.md)：每条代码的论文依据 + 14 条 ASSUMPTION + 缺陷记录
 - [`../docs/TRAINING_RECORD.md`](../docs/TRAINING_RECORD.md)：7 个任务的训练与诊断详细记录
 - [`../docs/FINAL_DELIVERY.md`](../docs/FINAL_DELIVERY.md)：成员 B 最终交付说明与验收结论
-- [`../simulation-dataset/README.md`](../simulation-dataset/README.md)：成员 A 的物理仿真与数据集生成端
+- `roleA` 分支的 `README.md`：成员 A 的物理仿真与数据集生成端

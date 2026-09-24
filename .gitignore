@@ -40,3 +40,6 @@ desktop.ini
 #   cnn-inversion/runs/**/model.keras     训练好的模型权重（单文件 1.5-2.6 MB）
 #   simulation-dataset/outputs/dataset/   968 张 POM 灰度图 + 标签 CSV + 划分表
 #   paper/*.pdf                           参考文献原文
+
+# ---------- 成员 A 的分支数据（按需克隆到此目录，不入库）----------
+_roleA/

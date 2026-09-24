@@ -1,7 +1,0 @@
-filename,eta,U,free_energy,kind,n_torons
-single_eta32_U0p0.png,32,0.0,1.3925787087320934e-13,single,1
-single_eta32_U3p5.png,32,3.5,-2.493621822739306e-14,single,1
-single_eta36_U0p0.png,36,0.0,1.1230330774611789e-13,single,1
-single_eta36_U3p5.png,36,3.5,-5.1811605730932656e-14,single,1
-single_eta40_U0p0.png,40,0.0,9.292919874203249e-14,single,1
-single_eta40_U3p5.png,40,3.5,-7.112528089465474e-14,single,1

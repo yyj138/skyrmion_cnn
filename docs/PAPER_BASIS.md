@@ -86,19 +86,19 @@ DOI: 10.1038/s41598-025-89699-2（页码 = PDF 页码）｜ 原文副本：`pape
 | 3.8 | 最大 epoch | 200（早停会提前终止） | 论文只给 patience=5；Fig.2g/3c/3f 显示 ~10–30 epoch 收敛 |
 | 3.9 | EarlyStopping 细节 | monitor=val_loss, restore_best_weights=True | 论文只说 patience=5 |
 | 3.10 | 混合集 85%/5% 的分母 | 按"剩余 90% 集合"的 85%/5% 切分（约 10% 剩余样本不进入任何集合） | Fig.5b 图注字面："the remaining is divided into training (85%) and validation (5%) sets"；A 的划分表采用归一化填满解释（76.5/13.5/10），用 A 的表时以表为准 |
-| 3.11 | 回归标签标准化 | z-score（用训练集统计量），预测反变换回物理量再算指标 | 论文未提及；数值必需：free_energy ~1e-13 J，不标准化 MSE ~1e-26，float32 梯度过小无法收敛（A 的 `simulation-dataset/DATASET.md` 亦建议） |
+| 3.11 | 回归标签标准化 | z-score（用训练集统计量），预测反变换回物理量再算指标 | 论文未提及；数值必需：free_energy ~1e-13 J，不标准化 MSE ~1e-26，float32 梯度过小无法收敛（A 的 `roleA` 分支 `docs/dataset_readme.md` 亦建议） |
 | 3.12 | 早停 patience（偏差项） | 论文=5（默认）；**A 的数据上 ①–⑥ 建议 30**；**⑦ 建议 80**（配 `--det-aug --patience 80 --epochs 400`） | 数据驱动偏差：A 的稀疏纹理学习慢。patience=5 时 ① 在 epoch 13 停住（test acc 0.077）、⑦ 在 epoch 48 停住（仍停在随机线 ln(11)≈2.397）。⑦ 实测需约 60 epoch 才拟合（`--det-aug` 下 e58 train_acc 首达 1.0、e60 train/val 双双 1.0、早停于 e209）。报告中应说明此调整源于仿真数据与论文数据分布差异 |
 | 3.13 | 随机种子与结果波动 | `cnn-inversion/src/train.py --seed` 固定全局种子（默认 42）；**报告建议多种子 mean±std** | 小数据集（88 张）上训练是随机过程（权重初始化+增强抽样），同配置不同 seed 的 test acc 实测可从 0.62 波动到 1.00（2026-09-09）。单次跑分不可作为结论；论文只报单次值，我们应在报告中披露 seed 与波动范围。**注：2026-09-14 查明，除权重初始化外还有一处更严重的非确定性来源，见 3.14 与 §7** |
 | 3.14 | 在线增强的随机数来源（**2026-09-14 修复的偏差项**） | 默认走 `augment()`（全局随机源，多线程下不可复现）；`--det-aug` 改用 `augment_stateless()`（随机量由样本索引派生，可复现） | 见 §7 缺陷记录。默认路径与历史运行**逐字一致**，故 ①–⑥ 已固化的 model/metrics 不受影响；⑦ 启用 `--det-aug` 后方可复现。变换集合两者完全相同（4 旋转 × 2 翻转 × 2 翻转 = 16 种组合），不改变任务定义与数据分布 |
 
 ## 4. 与成员 A 的数据接口（2026-09-08 已交付并对齐）
 
-A 交付：`simulation-dataset/outputs/dataset/`
+A 交付：`roleA` 分支的 `outputs/dataset/`
 - `pom_images/`：968 张 300×300 灰度 POM（单 toron 88、双 toron 880）
 - `labels/`：labels_single.csv / labels_double.csv / labels_mixed.csv，
   列：filename,eta,U,free_energy,kind,n_torons[,separation]
 - `splits/`：7 个任务的划分表共 8 个文件（含 split 列 train/val/test），**训练时经
-  `--split-csv` 传入，勿重新随机划分**（A 的 `simulation-dataset/DATASET.md` 要求，
+  `--split-csv` 传入，勿重新随机划分**（A 的 `roleA` 分支 `docs/dataset_readme.md` 要求，
   保证 A/B 两端可复现一致）
 - η 类别：30–40 的 11 个整数（见 2.4）；free_energy 量级 ~1e-13 J（见 3.11）
 - A 数据生成声明（报告可引用）：解析 ansatz 等效平衡态 + 经验电压模型，
@@ -158,7 +158,7 @@ A 交付：`simulation-dataset/outputs/dataset/`
 
 ## 5. 运行方式
 
-> 以下命令的**工作目录为仓库的 `cnn-inversion/`**；`$DS` 指向成员 A 交付的数据集 `simulation-dataset/outputs/dataset`。
+> 以下命令的**工作目录为仓库的 `cnn-inversion/`**；`$DS` 指向成员 A 交付的数据集（`roleA` 分支的 `outputs/dataset`，见 `cnn-inversion/README.md` 的获取步骤）。
 
 ```bash
 cd cnn-inversion
@@ -170,7 +170,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 python src/models.py
 
 # ---- 用成员 A 交付的数据正式训练（DS 指向 A 的 outputs/dataset） ----
-DS=../simulation-dataset/outputs/dataset
+DS=../_roleA/outputs/dataset
 
 # ① 单 toron 螺距分类（正式运行使用成员 B 派生的分层划分表，train/val/test 均覆盖 11 类）
 #    若使用 A 的 split_pitch_classification_single.csv（无 val 行），代码会自动从 train 划 15%，见 3.6

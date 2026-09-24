@@ -155,7 +155,7 @@ classification of the LC pitch in Fig. 5e reveals a very good agreement as well"
 
 ```powershell
 cd cnn-inversion
-$DS = "../simulation-dataset/outputs/dataset"
+$DS = "../_roleA/outputs/dataset"
 
 # 例：单 toron 螺距分类（其余任务换 --csv/--split-csv/--out，见 docs/PAPER_BASIS.md 第 5 节）
 python src/train.py --task pitch --csv "$DS/labels/labels_single.csv" --images "$DS/pom_images" `

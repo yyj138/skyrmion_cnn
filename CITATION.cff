@@ -9,13 +9,14 @@ title: >-
 
 abstract: >-
   Reproduction of the methodology of Terroa, Tasinkevych & Dias (Scientific
-  Reports 15:10921, 2025) for liquid-crystal skyrmions. The repository contains
-  two self-contained sub-projects: (1) a physical simulation and dataset
-  pipeline that generates 968 grayscale 300x300 polarised optical microscopy
-  (POM) images together with pitch, voltage and Frank-Oseen free-energy labels;
-  and (2) a convolutional neural network pipeline with three Keras
-  architectures that invert those POM textures back into pitch, applied voltage
-  and free energy across seven classification / regression tasks.
+  Reports 15:10921, 2025) for liquid-crystal skyrmions. This branch (roleB)
+  contains the convolutional neural network pipeline with three Keras
+  architectures that invert polarised optical microscopy (POM) textures into
+  pitch, applied voltage and free energy across seven classification /
+  regression tasks. The companion physical-simulation and dataset-generation
+  pipeline (968 grayscale 300x300 POM images with pitch, voltage and
+  Frank-Oseen free-energy labels) is maintained on the roleA branch of the
+  same repository.
 
 type: software
 
