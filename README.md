@@ -152,7 +152,7 @@ python main.py          # 6 组样本跑通 ansatz → 自由能 → POM → CSV
 python check_trends.py  # 3 个定性物理趋势自动校验
 ```
 
-> ⚠️ **必须在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`，在仓库根目录直接执行会写到错误位置。
+> **注意：必须在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`，在仓库根目录直接执行会写到错误位置。
 
 ### 4.3 复现全部 7 个训练任务
 
@@ -246,8 +246,8 @@ python dataset_generator.py --mode all --n_voltages 8
 
 **表述规范**：
 
-- ✅ 正确：「对解析 ansatz 构型做 Frank-Oseen 自由能体积积分，作为标签」
-- ❌ 错误：「得到 Frank-Oseen 极小化的自由能」「复现 Frank-Oseen 松弛得到平衡态解」
+- 正确表述：「对解析 ansatz 构型做 Frank-Oseen 自由能体积积分，作为标签」
+- 错误表述：「得到 Frank-Oseen 极小化的自由能」「复现 Frank-Oseen 松弛得到平衡态解」
 
 **由此带来的结论边界**：本项目的 ansatz + 线性叠加数据比论文的 PDE 松弛数据「更简单」，需要学习的映射更平滑，因此**部分指标高于论文属预期**，不应解读为「超越原论文」。
 
