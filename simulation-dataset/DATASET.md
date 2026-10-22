@@ -1,5 +1,8 @@
 # 数据集说明（DATASET.md）— 交付成员 B
 
+> **2026-10 更新**：本文件描述原 **968 张训练数据集**（未做任何改动）。另有 **440 张补充测试数据集**
+> （仅测试、不入训练，与原图零重复），见 [`SUPPLEMENT.md`](SUPPLEMENT.md)。
+
 ## 1. 数据集生成方式（重要声明，报告可直接引用）
 
 > 本数据集没有采用论文原始 Frank-Oseen PDE 松弛求解得到平衡态 toron；采用论文给出的解析 ansatz 初场作为等效平衡态指向矢场。手性螺旋、电压诱导形变使用简化经验模型。Frank-Oseen 自由能标签是对 ansatz 构型直接做体积积分的结果。pde_relaxation.py 实现了完整松弛求解器，但受计算性能限制，没有用于批量数据集生成，可作为后续拓展工作。
@@ -79,4 +82,4 @@ outputs/dataset/
 
 ---
 
-相关文档：[`../README.md`](../README.md)（仓库总览）、[`README.md`](README.md)（仿真方法与本子项目说明）、[`../cnn-inversion/README.md`](../cnn-inversion/README.md)（CNN 训练端）。
+相关文档：[`../README.md`](../README.md)（仓库总览）、[`README.md`](README.md)（仿真方法与本子项目说明）、[`SUPPLEMENT.md`](SUPPLEMENT.md)（补充测试数据集 440 张说明）、[`../cnn-inversion/README.md`](../cnn-inversion/README.md)（CNN 训练端）。

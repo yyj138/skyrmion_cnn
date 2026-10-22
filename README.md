@@ -19,7 +19,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 
 | 成员 | 职责 | 目录 | 主要产出 |
 |------|------|------|----------|
-| **成员A** | 物理仿真、光学后处理、数据集工程 | [`simulation-dataset/`](simulation-dataset/) | toron 三维解析 ansatz、Frank-Oseen 自由能积分、3D 琼斯矩阵 POM 成像、968 张 300×300 灰度图数据集 + 标签 + 划分表 |
+| **成员A** | 物理仿真、光学后处理、数据集工程 | [`simulation-dataset/`](simulation-dataset/) | toron 三维解析 ansatz、Frank-Oseen 自由能积分、3D 琼斯矩阵 POM 成像、968 张训练图数据集 + 440 张补充测试图 + 标签 + 划分表 |
 | **成员B** | CNN 建模、训练、评估、结果整理 | [`cnn-inversion/`](cnn-inversion/) | 3 套 Keras 网络、7 个任务的可复现训练与评估管线、`runs/` 全套产物、论文依据对照文档 |
 
 总方案文档：[`docs/大创完整实施方案（2人全部负责代码，无时间线、含分工、任务清单、预期结果、降级预案、交付物）.docx`](docs/大创完整实施方案（2人全部负责代码，无时间线、含分工、任务清单、预期结果、降级预案、交付物）.docx)
@@ -32,6 +32,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 .
 ├── README.md                     # 本文件（仓库总览）
 ├── CITATION.cff                  # 引用信息
+├── DATASET_SUPPLEMENT_REQUEST.md # 成员 A 补充测试数据集需求清单（已交付）
 ├── .gitignore / .gitattributes
 │
 ├── cnn-inversion/                # ── 成员 B：CNN 反演 ──────────────────
@@ -56,13 +57,15 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 ├── simulation-dataset/           # ── 成员 A：物理仿真与数据集工程 ─────
 │   ├── README.md                 #   仿真方法、关键参数（论文 Table 1）、简化声明
 │   ├── DATASET.md                #   数据集交付说明：字段含义、划分比例、使用禁忌
+│   ├── SUPPLEMENT.md             #   补充测试数据集（440 张）交付说明
 │   ├── requirements.txt          #   numpy / matplotlib / pillow / tqdm
-│   ├── src/                      #   10 个脚本
+│   ├── src/                      #   11 个脚本
 │   │   ├── config.py             #     全部仿真参数（对齐论文 Table 1）
 │   │   ├── ansatz.py             #     toron 三维解析 ansatz（论文 Eq.3-6）
 │   │   ├── frank_osseen.py       #     Frank-Oseen 自由能积分（论文 Eq.1）
 │   │   ├── pom_imaging.py        #     3D 琼斯矩阵 POM 成像（向量化）
 │   │   ├── dataset_generator.py  #     批量生成 + 数据集划分
+│   │   ├── generate_supplement.py #    补充测试集生成（440 张，ansatz R/B 变异）
 │   │   ├── visualize.py          #     数据校验可视化
 │   │   ├── pde_relaxation.py     #     可选：PDE 松弛求解器（未用于批量生成）
 │   │   ├── main.py               #     最小验证 demo（6 组样本）
@@ -73,6 +76,10 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │       │   ├── pom_images/       #     968 张 300×300 灰度 PNG（CNN 训练唯一图源）
 │       │   ├── labels/           #     4 个标签 CSV
 │       │   └── splits/           #     7 个 train/val/test 划分表
+│       ├── supplement/           #     补充测试集（440 张，仅测试、不入训练）
+│       │   ├── pom_images/       #       440 张 300×300 灰度 PNG
+│       │   ├── labels/           #       3 个标签 CSV（single / double / mixed）
+│       │   └── generation_log.txt#       生成方法、参数与种子记录
 │       └── visualizations/       #     截面图、POM gallery、标签分布、presentation/ 展示图
 │
 ├── docs/                         # ── 项目文档 ────────────────────────
@@ -207,6 +214,17 @@ cd simulation-dataset/src
 python dataset_generator.py --mode all --n_voltages 8
 ```
 
+### 4.5 重新生成补充测试数据集（约 36 分钟）
+
+```bash
+cd simulation-dataset/src
+python generate_supplement.py
+```
+
+> 生成 440 张测试图（单 220 + 双 220）与 3 个标签 CSV，输出到 `outputs/supplement/`，
+> **不触碰** `outputs/dataset/`。参数网格为确定性生成，可逐位复现。
+> 方法与使用说明见 [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md)。
+
 ---
 
 ## 5. 复现结果
@@ -244,6 +262,10 @@ python dataset_generator.py --mode all --n_voltages 8
 5. 电场为静态直流电压扫描（0–3.5 V，8 档），**未实现论文的脉冲宽度调制（PWM）** 电场；
 6. `pde_relaxation.py` 实现了完整松弛求解器（4 阶 Runge-Kutta，已验证自由能单调下降），但受算力限制未用于批量生成，保留作为后续拓展工作。
 
+> **补充测试数据集**（`outputs/supplement/`，440 张）：沿用上述同一方法，仅在 ansatz 几何参数
+> R（toron 半径）、B（扭转壁宽度）上做小幅变异以生成新构型，自由能对新构型重新积分；
+> 全部图片与原 968 张零重复，仅作模型泛化检验的测试数据。详见 [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md)。
+
 **表述规范**：
 
 - 正确表述：「对解析 ansatz 构型做 Frank-Oseen 自由能体积积分，作为标签」
@@ -270,6 +292,7 @@ python dataset_generator.py --mode all --n_voltages 8
 | [`cnn-inversion/README.md`](cnn-inversion/README.md) | 成员 B 代码逐文件说明、实验任务清单与结果、复现/评估命令、产物格式 |
 | [`simulation-dataset/README.md`](simulation-dataset/README.md) | 成员 A 仿真方法、关键参数（对齐论文 Table 1）、数据集划分比例、简化假设表述规范 |
 | [`simulation-dataset/DATASET.md`](simulation-dataset/DATASET.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
+| [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md) | 补充测试数据集（440 张）：R/B 参数变异生成方法、新增 R/B 字段说明、仅测试不入训练的使用注意事项 |
 | [`docs/PAPER_BASIS.md`](docs/PAPER_BASIS.md) | **每条代码的论文依据**：架构块数、FC 节点数、激活函数、损失、优化器、EarlyStopping、划分比例，全部引用论文原文与页码；附 14 条论文未写明的假设（ASSUMPTION）；含 ⑦ 任务的失败与修复全过程 |
 | [`docs/TRAINING_RECORD.md`](docs/TRAINING_RECORD.md) | 7 个任务的训练与诊断全记录：多 seed 对照、patience 调优、混合螺距分类的误诊与更正、在线增强不可复现缺陷的定位与修复 |
 | [`docs/FINAL_DELIVERY.md`](docs/FINAL_DELIVERY.md) | 成员 B 最终交付说明、验收结论、不纳入正式交付的历史目录说明 |

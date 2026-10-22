@@ -128,6 +128,11 @@ python src/evaluate.py --run runs/mixed_voltage
 python src/evaluate.py --run runs/mixed_pitch_final
 ```
 
+> **补充测试集（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了一批
+> **仅用于测试** 的新构型 POM 图（ansatz R/B 参数变异生成，与训练图零重复，含单/双/混合三个标签 CSV）。
+> 可将已训练模型（`runs/*/model.keras`）对 `supplement/pom_images/` 推理，检验对新构型的泛化能力；
+> **切勿**加入训练或验证。字段说明与注意事项见 [`../simulation-dataset/SUPPLEMENT.md`](../simulation-dataset/SUPPLEMENT.md)。
+
 每个 `runs/<task>/` 目录下的产物：
 
 | 文件 | 内容 |

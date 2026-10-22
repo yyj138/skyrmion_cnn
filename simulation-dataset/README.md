@@ -2,7 +2,7 @@
 
 复现论文：Terroa, Tasinkevych, Dias, "Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions", Scientific Reports 15:10921 (2025)，论文文件见 [`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)。
 
-本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。
+本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`../DATASET_SUPPLEMENT_REQUEST.md`](../DATASET_SUPPLEMENT_REQUEST.md)）补充生成了 440 张测试用 POM 图，说明见 [`SUPPLEMENT.md`](SUPPLEMENT.md)。
 
 ## 目录结构
 
@@ -14,6 +14,7 @@ simulation-dataset/
 │   ├── frank_osseen.py                   # Task 2-2: Frank-Oseen 自由能积分
 │   ├── pom_imaging.py                    # Task 2-3: Jones 矩阵 POM 成像
 │   ├── dataset_generator.py              # Task 2-4,2-5: 批量生成 + 数据集划分
+│   ├── generate_supplement.py            # 补充测试集生成 (440 张, ansatz R/B 变异)
 │   ├── visualize.py                      # Task 2-6: 数据校验可视化
 │   ├── pde_relaxation.py                 # 可选: PDE 松弛求解器
 │   ├── main.py                           # 模块1: 最小验证 demo
@@ -24,10 +25,15 @@ simulation-dataset/
 │   │   ├── pom_images/                   # POM 灰度图 (300x300 PNG, 训练用)
 │   │   ├── labels/                       # csv 标签文件
 │   │   └── splits/                       # train/val/test 划分 csv
+│   ├── supplement/                       # 补充测试集 (440 张, 仅测试不入训练)
+│   │   ├── pom_images/                   #   440 张灰度 PNG
+│   │   ├── labels/                       #   3 个标签 csv (single/double/mixed)
+│   │   └── generation_log.txt            #   生成方法、参数与种子记录
 │   └── visualizations/                   # 截面图、趋势图；presentation/ 为报告展示图
 ├── requirements.txt                      # 本子项目依赖
 ├── README.md                             # 本文件
-└── DATASET.md                            # 数据集交付说明（给成员 B）
+├── DATASET.md                            # 数据集交付说明（给成员 B）
+└── SUPPLEMENT.md                         # 补充测试数据集交付说明（440 张，给成员 B）
 ```
 
 > 原论文 PDF 统一存放在仓库顶层 [`../paper/`](../paper/) 目录。
@@ -63,6 +69,9 @@ python visualize.py
 
 # 5. 完整数据集生成（单 toron 88 张 + 双 toron 880 张，约 4 小时）
 python dataset_generator.py --mode all --n_voltages 8
+
+# 6. 补充测试数据集生成（440 张，约 36 分钟；输出到 ../outputs/supplement，不触碰 dataset/）
+python generate_supplement.py
 ```
 
 > ⚠️ **务必在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`（`OUTPUT_DIR = "../outputs"`），在仓库根目录直接执行会把产物写到错误位置。
@@ -76,6 +85,7 @@ python dataset_generator.py --mode all --n_voltages 8
 | 2-3 Jones 矩阵 POM | pom_imaging.py | 向量化加速，Δn=0.06，λ=500nm，正交偏振 |
 | 2-4 批量数据集生成 | dataset_generator.py | eta 取 30-40，U 取 0-3.5V，自动丢弃 eta<30 |
 | 2-5 数据集划分 | dataset_generator.py | 分类 85/15，回归 80/15/5，混合 10% 测试 |
+| 补充测试数据集 | generate_supplement.py | 440 张测试图（单 220 + 双 220），ansatz R/B 参数变异生成新构型，仅测试不入训练 |
 | 2-6 数据校验可视化 | visualize.py | 截面图、POM gallery、标签分布、趋势校验 |
 | 可选 PDE 松弛 | pde_relaxation.py | 4 阶 Runge-Kutta 求解器，批量生成不使用 |
 | 模块1 最小验证 | main.py | 6 组小样本跑通全链路 |
@@ -133,6 +143,7 @@ python dataset_generator.py --mode all --n_voltages 8
 - 单 toron：88 张（eta 取 30-40 共 11 值 × U 取 0-3.5V 共 8 档）
 - 双 toron：880 张（同上 × 分离距离 10 档：30-75）
 - 混合：968 张；另有 6 张 demo 小样本
+- 补充测试集：440 张（单 220 + 双 220，仅测试、不入训练），说明见 [SUPPLEMENT.md](SUPPLEMENT.md)
 - 标签与划分字段说明见 [DATASET.md](DATASET.md)
 
 ---
@@ -141,4 +152,5 @@ python dataset_generator.py --mode all --n_voltages 8
 
 - [`../README.md`](../README.md)：仓库总览（两个子项目的分工与整体结构）
 - [`DATASET.md`](DATASET.md)：数据集字段含义、规格与使用禁忌（团队内部数据接口约定）
+- [`SUPPLEMENT.md`](SUPPLEMENT.md)：补充测试数据集（440 张）的生成方法与使用注意
 - [`../cnn-inversion/README.md`](../cnn-inversion/README.md)：成员 B 的 CNN 训练与评估端
