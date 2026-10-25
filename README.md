@@ -9,6 +9,8 @@
 **论文**：Terroa, Tasinkevych & Dias, *Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions*, **Scientific Reports 15:10921 (2025)**.
 DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) ｜ 原文副本：[`paper/s41598-025-89699-2.pdf`](paper/s41598-025-89699-2.pdf)
 
+**图像参数预测平台**：平台前端、后端和启动脚本集中在 [`platform/`](platform/README.md)。Windows 可双击 `platform/start_platform.cmd` 启动本机演示。
+
 ---
 
 ## 1. 项目简介

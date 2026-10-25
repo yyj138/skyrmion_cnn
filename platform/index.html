@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17305a">
+    <meta name="description" content="液晶 skyrmion 模拟 POM 图像参数预测演示平台">
+    <title>图像参数预测平台 · 液晶 skyrmion</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="图像参数预测平台首页">
+          <span class="brand-rule" aria-hidden="true"></span>
+          <span>图像参数预测平台</span>
+        </a>
+        <nav aria-label="页面导航">
+          <a class="nav-current" href="#workspace" aria-current="page">预测工作台</a>
+          <a href="#method">结果说明</a>
+        </nav>
+        <span class="header-context">液晶 skyrmion · 大创项目</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <div class="page-intro">
+          <div>
+            <h1>从光学纹理读取结构参数</h1>
+            <p>选择项目示例，或上传 300×300 像素的模拟 POM 图；选图后自动预测。</p>
+          </div>
+          <div id="service-status" class="service-status" role="status" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span><span>正在检查模型</span>
+          </div>
+        </div>
+
+        <section id="workspace" class="workspace" aria-label="图像预测工作台">
+          <div class="plate input-plate">
+            <div class="plate-heading">
+              <div><span class="plate-letter" aria-hidden="true">A</span><h2>输入图像</h2></div>
+              <span class="plate-note">300 × 300 px · 灰度 POM</span>
+            </div>
+
+            <div class="input-workarea">
+              <figure class="image-figure">
+                <div class="image-frame" id="image-frame">
+                  <img id="preview-image" src="/api/examples/single/image" alt="当前选择的项目模拟 POM 图像" width="300" height="300">
+                  <span id="image-placeholder" class="image-placeholder" hidden>尚未选择图像</span>
+                </div>
+                <figcaption id="image-caption">正在载入项目示例</figcaption>
+              </figure>
+
+              <div class="input-actions">
+                <label id="drop-zone" class="drop-zone" for="image-input">
+                  <span class="drop-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 16.5v2A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  <strong>选择图像</strong>
+                  <span>也可将文件拖入此处</span>
+                  <small>300×300 灰度 PNG/JPEG · 不超过 8 MB</small>
+                </label>
+                <input id="image-input" class="visually-hidden" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" aria-describedby="input-guidance">
+                <p id="input-guidance" class="input-guidance">仅支持项目模拟灰度图；不会裁剪或缩放。</p>
+                <button id="predict-button" class="primary-button" type="button" disabled>重新预测</button>
+              </div>
+            </div>
+
+            <div id="input-error" class="inline-error" role="alert" hidden></div>
+
+            <div class="examples-heading"><h3>项目模拟示例</h3><span>点击后自动预测</span></div>
+            <div id="example-list" class="example-list" aria-label="项目模拟示例"></div>
+          </div>
+
+          <div class="plate result-plate">
+            <div class="plate-heading">
+              <div><span class="plate-letter" aria-hidden="true">B</span><h2>参数反演结果</h2></div>
+              <span id="result-state" class="result-state" role="status" aria-live="polite">等待预测</span>
+            </div>
+
+            <div class="kind-section">
+              <div class="result-label">自动识别的图像类型</div>
+              <div id="kind-value" class="kind-value">—</div>
+            </div>
+
+            <dl id="result-grid" class="result-grid">
+              <div class="result-item">
+                <dt>螺距类别 η <span>仿真晶格单位</span></dt>
+                <dd id="eta-value">—</dd>
+              </div>
+              <div class="result-item">
+                <dt>预测电压 <span>V</span></dt>
+                <dd id="voltage-value">—</dd>
+              </div>
+              <div class="result-item result-item-full">
+                <dt>模拟 Frank-Oseen 自由能估计 <span>J</span></dt>
+                <dd id="energy-value">—</dd>
+              </div>
+            </dl>
+
+            <p id="clipping-note" class="clipping-note" hidden>电压原始预测超出 0–3.5 V，显示值已限制在训练范围内；这张图的预测可能不稳定。</p>
+            <div id="result-error" class="inline-error" role="alert" hidden></div>
+
+            <details id="reference-details" class="reference-details" hidden>
+              <summary>查看示例标注与预测对照</summary>
+              <div class="reference-content">
+                <p>标注来自项目模拟数据，不参与本次模型预测。</p>
+                <table>
+                  <caption class="visually-hidden">示例标注与模型预测对照</caption>
+                  <thead><tr><th scope="col">参数</th><th scope="col">预测</th><th scope="col">标注</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">类型</th><td id="compare-kind-predicted">—</td><td id="compare-kind-reference">—</td></tr>
+                    <tr><th scope="row">螺距 η</th><td id="compare-eta-predicted">—</td><td id="compare-eta-reference">—</td></tr>
+                    <tr><th scope="row">电压</th><td id="compare-voltage-predicted">—</td><td id="compare-voltage-reference">—</td></tr>
+                    <tr><th scope="row">模拟自由能</th><td id="compare-energy-predicted">—</td><td id="compare-energy-reference">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+
+            <div class="scope-note">
+              <strong>适用范围</strong>
+              <p id="scope-note-text">模型目前仅在项目模拟图上验证，真实显微照片结果尚未验证。它不能识别无 toron 或其他非 POM 图像。</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="method" class="method-section" aria-labelledby="method-title">
+          <div class="section-heading">
+            <h2 id="method-title">如何读取结果</h2>
+            <p>三个输出来自已选定的项目模型。单/双 toron 类型先由图像自动判断，再选择对应螺距模型。</p>
+          </div>
+          <dl class="definitions">
+            <div><dt>螺距 η</dt><dd>30–40 的类别，单位沿用仿真晶格；未经标定，不能直接解释为 μm。</dd></div>
+            <div><dt>预测电压</dt><dd>模型训练范围为 0–3.5 V。显示的是单图预测值，不代表精密测量。</dd></div>
+            <div><dt>模拟自由能</dt><dd>对解析 ansatz 构型的 Frank-Oseen 自由能估计，不是实验测得的平衡态自由能。</dd></div>
+          </dl>
+          <details class="evidence-details">
+            <summary>查看模型验证范围与数据依据</summary>
+            <div class="evidence-content">
+              <p>在 222 张封存的项目模拟测试图上，类型判断为 222/222，自动路由后的螺距预测为 214/222，电压 MAE 为 0.073 V，混合自由能 R² 为 0.972。单张图仍可能出现较大误差；这些指标不能外推到真实显微照片。</p>
+              <p>模拟数据由解析 ansatz、经验电压扰动和 Jones 矩阵成像生成，没有对批量数据执行 PDE 松弛。平台不提供未经校准的置信度百分比。</p>
+            </div>
+          </details>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer"><div>液晶 skyrmion 光学纹理 CNN 分析 · 大创项目研究原型</div><div>仅供项目模拟图演示</div></footer>
+  </body>
+</html>

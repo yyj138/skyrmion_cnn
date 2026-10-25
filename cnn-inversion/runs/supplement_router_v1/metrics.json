@@ -1,0 +1,38 @@
+{
+  "new_validation": {
+    "n": 62,
+    "accuracy": 1.0,
+    "by_kind": {
+      "single": {
+        "n": 32,
+        "accuracy": 1.0
+      },
+      "double": {
+        "n": 30,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "original_validation": {
+    "n": 131,
+    "accuracy": 1.0,
+    "by_kind": {
+      "single": {
+        "n": 13,
+        "accuracy": 1.0
+      },
+      "double": {
+        "n": 118,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "epochs_run": 20,
+  "best_epoch": 20,
+  "train_count_unique": 1292,
+  "new_train_count": 156,
+  "extra_train_count": 396,
+  "single_repeats": 3,
+  "manifest_sha256": "1a922a5b183e57e8356faf234767c87098b342c8e4e7c8cdb0c95e6ba007d294",
+  "holdout_evaluated": false
+}
