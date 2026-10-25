@@ -34,7 +34,6 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 .
 ├── README.md                     # 本文件（仓库总览）
 ├── CITATION.cff                  # 引用信息
-├── DATASET_SUPPLEMENT_REQUEST.md # 成员 A 补充测试数据集需求清单（已交付）
 ├── .gitignore / .gitattributes
 │
 ├── cnn-inversion/                # ── 成员 B：CNN 反演 ──────────────────
@@ -47,19 +46,34 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │   │   ├── train.py              #   训练入口（Adam lr=1e-3、EarlyStopping）
 │   │   ├── evaluate.py           #   测试集评估 + 论文风格绘图
 │   │   └── smoke_test.py         #   端到端冒烟测试（合成数据，秒级）
-│   └── runs/                     #   7 个正式训练任务的全套产物
+│   └── runs/                     #   正式训练产物及平台所需的补训模型
 │       ├── pitch_final/          #     ① 单 toron 螺距分类
 │       ├── voltage/              #     ② 单 toron 电压回归
 │       ├── energy_single/        #     ③ 单 toron 自由能回归
 │       ├── energy_double/        #     ④ 双 toron 自由能回归
 │       ├── mixed_energy/         #     ⑤ 混合 自由能回归
 │       ├── mixed_voltage/        #     ⑥ 混合 电压回归
-│       └── mixed_pitch_final/    #     ⑦ 混合 螺距分类
+│       ├── mixed_pitch_final/    #     ⑦ 混合 螺距分类
+│       ├── supplement_router_v1/ #    平台单/双 toron 类型判断模型
+│       ├── supplement_geometry_v1/ # 平台单、双 toron 螺距模型
+│       └── supplement_voltage_v1/ #  平台电压模型
+│
+├── platform/                     # ── 图像参数预测平台 ────────────────
+│   ├── README.md                 #   启动、接口、验证和适用范围说明
+│   ├── start_platform.cmd        #   Windows 一键启动脚本
+│   ├── launch_demo.py            #   启动前检查和本机服务启动
+│   ├── predictor.py              #   加载模型并预测图像参数
+│   ├── requirements.txt          #   平台运行依赖
+│   ├── requirements-dev.txt      #   接口与浏览器检查依赖
+│   ├── index.html                #   页面入口
+│   ├── assets/                   #   样式、脚本及两张内置示例图
+│   └── server/                   #   FastAPI 接口及测试
 │
 ├── simulation-dataset/           # ── 成员 A：物理仿真与数据集工程 ─────
 │   ├── README.md                 #   仿真方法、关键参数（论文 Table 1）、简化声明
 │   ├── DATASET.md                #   数据集交付说明：字段含义、划分比例、使用禁忌
 │   ├── SUPPLEMENT.md             #   补充测试数据集（440 张）交付说明
+│   ├── DATASET_SUPPLEMENT_REQUEST.md # 补充测试数据集需求清单（已交付）
 │   ├── requirements.txt          #   numpy / matplotlib / pillow / tqdm
 │   ├── src/                      #   11 个脚本
 │   │   ├── config.py             #     全部仿真参数（对齐论文 Table 1）
@@ -90,8 +104,9 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │   ├── FINAL_DELIVERY.md         #   成员 B 最终交付说明与验收结论
 │   └── 大创完整实施方案（...）.docx
 │
-└── paper/                        # ── 参考文献 ────────────────────────
-    └── s41598-025-89699-2.pdf
+├── paper/                        # ── 参考文献 ────────────────────────
+│   └── s41598-025-89699-2.pdf
+└── s41598-025-89699-2.pdf       # 论文原文副本
 ```
 
 ---
