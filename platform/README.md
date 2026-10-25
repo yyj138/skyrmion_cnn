@@ -23,9 +23,9 @@ py -3.11 -m venv ..\.venv
 | `GET /api/health` | 模型加载状态 |
 | `GET /api/examples` | 内置模拟图清单 |
 | `GET /api/examples/{id}/image` | 内置模拟图原始灰度 PNG |
-| `POST /api/predict` | `multipart/form-data`，文件字段 `image`；返回交接文档约定的六个字段 |
+| `POST /api/predict` | `multipart/form-data`，文件字段 `image`；返回类型、螺距、电压、越界标记、模拟自由能和模型适用范围 |
 
-上传层核验 PNG/JPEG 文件内容、8 MB 大小上限和 300×300 尺寸，不自动裁剪或缩放；并拦截明显彩色、空白或亮区分布与项目模拟图明显不同的图像。基础外观检查在项目已有的 1,816 张 300×300 模拟 PNG 上未误拒，但**不能判定任意图片是否属于模型训练分布**。服务启动时加载一次模型，请求复用同一对象；临时文件在推理后删除。内置示例来自补充模拟数据的开发侧，平台副本在 `platform/assets/examples/`，未更改原始数据集。示例标注值与 `simulation-dataset/outputs/supplement/labels/` 中的 CSV 行核对一致，标注值不参与推理。
+上传层核验 PNG/JPEG 文件内容、8 MB 大小上限和 300×300 尺寸，不自动裁剪或缩放；并拦截明显彩色、空白或亮区分布与项目模拟图明显不同的图像。基础外观检查在当前仓库的 1,414 张原始与补充模拟 PNG 上未误拒，但**不能判定任意图片是否属于模型训练分布**。服务启动时加载一次模型，请求复用同一对象；临时文件在推理后删除。内置示例来自补充模拟数据的开发侧，平台副本在 `assets/examples/`，未更改原始数据集。示例标注值与 `../simulation-dataset/outputs/supplement/labels/` 中的 CSV 行核对一致，标注值不参与推理；开发/封存划分见 [`../cnn-inversion/data/supplement_split.csv`](../cnn-inversion/data/supplement_split.csv)。
 
 ## 验证
 

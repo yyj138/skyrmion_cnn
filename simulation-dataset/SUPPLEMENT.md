@@ -1,12 +1,12 @@
-# 补充测试数据集说明（SUPPLEMENT.md）— 交付成员 B
+# 补充图数据集说明（SUPPLEMENT.md）— 交付成员 B
 
-对应需求：仓库根目录 [`DATASET_SUPPLEMENT_REQUEST.md`](../DATASET_SUPPLEMENT_REQUEST.md)
+对应需求：本目录 [`DATASET_SUPPLEMENT_REQUEST.md`](DATASET_SUPPLEMENT_REQUEST.md)
 生成脚本：[`src/generate_supplement.py`](src/generate_supplement.py)
 生成日志：[`outputs/supplement/generation_log.txt`](outputs/supplement/generation_log.txt)
 
 ## 1. 概述
 
-在原数据集（968 张）之外新增 **440 张模拟 POM 灰度图**，作为**测试数据**用于检验已训练模型对新图片的预测效果。
+在原数据集（968 张）之外新增 **440 张模拟 POM 灰度图**，用于检验模型对新构型图片的预测效果。数据生成时原计划全部用于测试；后续平台模型训练将它们按基础构型划分为开发侧 218 张和封存测试侧 222 张。开发侧用于训练或验证，封存侧未参与训练或选型。划分记录见 [`../cnn-inversion/data/supplement_split.csv`](../cnn-inversion/data/supplement_split.csv)。
 
 | 数据部分 | 图片数 | 说明 |
 | --- | ---: | --- |
@@ -14,7 +14,7 @@
 | 双 toron | 220 张 | η=30~40 共 11 类，每类 20 张；8 档电压 + 10 档间距均衡覆盖 |
 | 混合 | 440 行 | 仅合并标签表，不另生成图片 |
 
-**本数据集仅为测试集**：不加入训练集、不参与任何训练/验证划分；原数据集与已训练模型完全未动（已复核原 `pom_images/` 仍为 974 张、原 labels 仍为 88/880/968 行）。
+原数据集目录未改动（生成时复核原 `pom_images/` 仍为 974 张、原 labels 仍为 88/880/968 行）。评估平台补训模型时，只能把上述 222 张封存侧作为独立测试集。
 
 ## 2. 目录结构
 
@@ -28,7 +28,7 @@ outputs/supplement/
 └── generation_log.txt              # 生成方法、参数与种子记录
 ```
 
-> 注意：本目录**没有** splits/ 划分文件——全部图片都是测试数据，无需划分。
+> 注意：补充图目录中没有 `splits/`；开发/封存划分保存在 `cnn-inversion/data/supplement_split.csv`。
 
 ## 3. 生成方法（重要声明，报告可直接引用）
 
@@ -99,9 +99,8 @@ outputs/supplement/
 
 ## 8. 成员 B 使用注意
 
-1. **仅作测试**：用 `cnn-inversion/runs/` 下已训练模型直接对本目录图片推理，
-   评估指标（分类 accuracy / 混淆矩阵，回归 R² / pred-vs-true），
-   **不要**把本目录任何图片加入训练或验证；
+1. **按划分使用**：开发侧 218 张参与平台模型的训练或验证；评估平台模型时只用封存侧 222 张，
+   不要将封存侧加入训练或选型。原有七个正式模型可对全部 440 张做训练外测试，但须与平台模型的封存测试结果分开报告；
 2. 图片路径按 `outputs/supplement/pom_images/` 读取，labels 按 filename 字段索引；
 3. free_energy 量级 ~1e-13 J，与原数据集相同，沿用训练时的 z-score 标准化参数
    （用训练集统计量，勿用本测试集重新拟合）；
@@ -114,5 +113,5 @@ outputs/supplement/
 ---
 
 相关文档：[`DATASET.md`](DATASET.md)（原 968 张数据集说明）、
-[`../DATASET_SUPPLEMENT_REQUEST.md`](../DATASET_SUPPLEMENT_REQUEST.md)（需求清单）、
+[`DATASET_SUPPLEMENT_REQUEST.md`](DATASET_SUPPLEMENT_REQUEST.md)（需求清单）、
 [`../cnn-inversion/README.md`](../cnn-inversion/README.md)（CNN 训练端）。

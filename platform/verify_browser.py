@@ -8,7 +8,7 @@ from playwright.sync_api import expect, sync_playwright
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEW_DIR = ROOT / ".impeccable" / "review"
+REVIEW_DIR = ROOT / "platform" / "runtime" / "browser-review"
 REVIEW_DIR.mkdir(parents=True, exist_ok=True)
 URL = "http://127.0.0.1:8765/"
 

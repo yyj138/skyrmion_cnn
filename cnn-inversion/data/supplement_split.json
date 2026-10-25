@@ -1,0 +1,18 @@
+{
+  "source": "simulation-dataset\\outputs\\supplement\\labels\\labels_supplement_mixed.csv",
+  "source_sha256": "6ce9cfb13caf26fabd177e7a8a555c9de9029add9d79c4d5b5ef566e55e9420c",
+  "group_fields": [
+    "kind",
+    "eta",
+    "R",
+    "B",
+    "separation"
+  ],
+  "counts": {
+    "single_development": 108,
+    "single_holdout": 112,
+    "double_development": 110,
+    "double_holdout": 110
+  },
+  "rule": "Deterministic alternating configuration groups per pitch; holdout is sealed"
+}

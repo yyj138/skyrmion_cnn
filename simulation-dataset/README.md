@@ -2,7 +2,7 @@
 
 复现论文：Terroa, Tasinkevych, Dias, "Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions", Scientific Reports 15:10921 (2025)，论文文件见 [`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)。
 
-本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`../DATASET_SUPPLEMENT_REQUEST.md`](../DATASET_SUPPLEMENT_REQUEST.md)）补充生成了 440 张测试用 POM 图，说明见 [`SUPPLEMENT.md`](SUPPLEMENT.md)。
+本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`DATASET_SUPPLEMENT_REQUEST.md`](DATASET_SUPPLEMENT_REQUEST.md)）生成了 440 张补充 POM 图；后续使用方式见 [`SUPPLEMENT.md`](SUPPLEMENT.md)。
 
 ## 目录结构
 
@@ -14,7 +14,7 @@ simulation-dataset/
 │   ├── frank_osseen.py                   # Task 2-2: Frank-Oseen 自由能积分
 │   ├── pom_imaging.py                    # Task 2-3: Jones 矩阵 POM 成像
 │   ├── dataset_generator.py              # Task 2-4,2-5: 批量生成 + 数据集划分
-│   ├── generate_supplement.py            # 补充测试集生成 (440 张, ansatz R/B 变异)
+│   ├── generate_supplement.py            # 补充图生成 (440 张, ansatz R/B 变异)
 │   ├── visualize.py                      # Task 2-6: 数据校验可视化
 │   ├── pde_relaxation.py                 # 可选: PDE 松弛求解器
 │   ├── main.py                           # 模块1: 最小验证 demo
@@ -25,7 +25,7 @@ simulation-dataset/
 │   │   ├── pom_images/                   # POM 灰度图 (300x300 PNG, 训练用)
 │   │   ├── labels/                       # csv 标签文件
 │   │   └── splits/                       # train/val/test 划分 csv
-│   ├── supplement/                       # 补充测试集 (440 张, 仅测试不入训练)
+│   ├── supplement/                       # 补充图 (440 张，开发/封存分开使用)
 │   │   ├── pom_images/                   #   440 张灰度 PNG
 │   │   ├── labels/                       #   3 个标签 csv (single/double/mixed)
 │   │   └── generation_log.txt            #   生成方法、参数与种子记录
@@ -33,7 +33,8 @@ simulation-dataset/
 ├── requirements.txt                      # 本子项目依赖
 ├── README.md                             # 本文件
 ├── DATASET.md                            # 数据集交付说明（给成员 B）
-└── SUPPLEMENT.md                         # 补充测试数据集交付说明（440 张，给成员 B）
+├── DATASET_SUPPLEMENT_REQUEST.md        # 补充图需求清单
+└── SUPPLEMENT.md                         # 补充图数据集说明（440 张，给成员 B）
 ```
 
 > 原论文 PDF 统一存放在仓库顶层 [`../paper/`](../paper/) 目录。
@@ -85,7 +86,7 @@ python generate_supplement.py
 | 2-3 Jones 矩阵 POM | pom_imaging.py | 向量化加速，Δn=0.06，λ=500nm，正交偏振 |
 | 2-4 批量数据集生成 | dataset_generator.py | eta 取 30-40，U 取 0-3.5V，自动丢弃 eta<30 |
 | 2-5 数据集划分 | dataset_generator.py | 分类 85/15，回归 80/15/5，混合 10% 测试 |
-| 补充测试数据集 | generate_supplement.py | 440 张测试图（单 220 + 双 220），ansatz R/B 参数变异生成新构型，仅测试不入训练 |
+| 补充图数据集 | generate_supplement.py | 440 张图（单 220 + 双 220），ansatz R/B 参数变异生成新构型；后续按构型划分开发侧和封存侧 |
 | 2-6 数据校验可视化 | visualize.py | 截面图、POM gallery、标签分布、趋势校验 |
 | 可选 PDE 松弛 | pde_relaxation.py | 4 阶 Runge-Kutta 求解器，批量生成不使用 |
 | 模块1 最小验证 | main.py | 6 组小样本跑通全链路 |
@@ -143,7 +144,7 @@ python generate_supplement.py
 - 单 toron：88 张（eta 取 30-40 共 11 值 × U 取 0-3.5V 共 8 档）
 - 双 toron：880 张（同上 × 分离距离 10 档：30-75）
 - 混合：968 张；另有 6 张 demo 小样本
-- 补充测试集：440 张（单 220 + 双 220，仅测试、不入训练），说明见 [SUPPLEMENT.md](SUPPLEMENT.md)
+- 补充图：440 张（单 220 + 双 220；开发侧 218 张、封存侧 222 张），说明见 [SUPPLEMENT.md](SUPPLEMENT.md)
 - 标签与划分字段说明见 [DATASET.md](DATASET.md)
 
 ---

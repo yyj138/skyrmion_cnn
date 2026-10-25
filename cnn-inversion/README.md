@@ -128,12 +128,9 @@ python src/evaluate.py --run runs/mixed_voltage
 python src/evaluate.py --run runs/mixed_pitch_final
 ```
 
-> **补充测试集（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了一批
-> **仅用于测试** 的新构型 POM 图（ansatz R/B 参数变异生成，与训练图零重复，含单/双/混合三个标签 CSV）。
-> 可将已训练模型（`runs/*/model.keras`）对 `supplement/pom_images/` 推理，检验对新构型的泛化能力；
-> **切勿**加入训练或验证。字段说明与注意事项见 [`../simulation-dataset/SUPPLEMENT.md`](../simulation-dataset/SUPPLEMENT.md)。
+> **补充图（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了 ansatz R/B 参数变异的新构型 POM 图。后续平台模型将其按基础构型分为开发侧 218 张和封存侧 222 张；开发侧参与训练或验证，封存侧只用于最终测试。划分见 [`data/supplement_split.csv`](data/supplement_split.csv)，字段说明见 [`../simulation-dataset/SUPPLEMENT.md`](../simulation-dataset/SUPPLEMENT.md)。原有七个正式模型没有用这些补充图训练。
 
-每个 `runs/<task>/` 目录下的产物：
+原有七个正式任务的 `runs/<task>/` 目录下的产物：
 
 | 文件 | 内容 |
 |------|------|
@@ -145,7 +142,7 @@ python src/evaluate.py --run runs/mixed_pitch_final
 | `training_log.csv` | 每个 epoch 的 train/val loss 与指标 |
 | `meta.json` | 划分表、类别表、回归标签标准化统计量、停轮 epoch（可复现凭证） |
 
-> 本目录只包含 7 个**正式**运行结果。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录已从仓库中排除，其结论已被上述正式运行取代，相关复盘记录保留在 `../docs/TRAINING_RECORD.md` 与 `../docs/FINAL_DELIVERY.md` 中。
+> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/TRAINING_RECORD.md` 与 `../docs/FINAL_DELIVERY.md` 中。
 
 ---
 

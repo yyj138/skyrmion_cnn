@@ -17,7 +17,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 
 胆甾相液晶中的 **toron / skyrmion** 三维拓扑结构，其偏振光学显微（POM）纹理与自身螺距 η、外场电压 U、自由能之间存在非线性映射。本项目按论文技术路线，把这一「结构参数 → 光学纹理」正问题用物理仿真实现，再用卷积神经网络求解「光学纹理 → 结构参数」的反问题。
 
-两名成员的全部代码均在本仓库内，各自目录**相互独立、无代码依赖**，仅通过一个数据接口（`simulation-dataset/outputs/dataset/` 的图片 + CSV 标签 + 划分表）衔接。
+两名成员的研究代码分别位于 `simulation-dataset/` 和 `cnn-inversion/`；图像参数预测平台位于 `platform/`，调用 `cnn-inversion/` 中的模型权重和图像预处理代码。
 
 | 成员 | 职责 | 目录 | 主要产出 |
 |------|------|------|----------|
@@ -39,7 +39,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 ├── cnn-inversion/                # ── 成员 B：CNN 反演 ──────────────────
 │   ├── README.md                 #   代码逐文件说明、7 个任务的复现命令
 │   ├── requirements.txt          #   锁定版本依赖（tensorflow-cpu==2.21.0 等）
-│   ├── data/                     #   成员 B 派生的划分表（① 任务使用的分层抽样版本）
+│   ├── data/                     #   训练划分表及补充图开发/封存划分
 │   ├── src/
 │   │   ├── models.py             #   3 个 Keras 模型，每行代码附论文出处
 │   │   ├── data.py               #   数据加载 + per-image z-score + 确定性增强
@@ -92,7 +92,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │       │   ├── pom_images/       #     968 张 300×300 灰度 PNG（CNN 训练唯一图源）
 │       │   ├── labels/           #     4 个标签 CSV
 │       │   └── splits/           #     7 个 train/val/test 划分表
-│       ├── supplement/           #     补充测试集（440 张，仅测试、不入训练）
+│       ├── supplement/           #     补充图 440 张（开发侧 218、封存侧 222）
 │       │   ├── pom_images/       #       440 张 300×300 灰度 PNG
 │       │   ├── labels/           #       3 个标签 CSV（single / double / mixed）
 │       │   └── generation_log.txt#       生成方法、参数与种子记录
@@ -113,7 +113,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 
 ## 3. 环境依赖
 
-两个子项目依赖不重叠，请**分别**安装。推荐使用虚拟环境。
+成员 A、B 的研究代码依赖请分别安装；预测平台沿用成员 B 的依赖并额外安装 Web 服务依赖，启动方法见 [`platform/README.md`](platform/README.md)。推荐使用虚拟环境。
 
 ### 3.1 成员 B：CNN 训练与评估
 
@@ -231,16 +231,20 @@ cd simulation-dataset/src
 python dataset_generator.py --mode all --n_voltages 8
 ```
 
-### 4.5 重新生成补充测试数据集（约 36 分钟）
+### 4.5 重新生成补充图数据集（约 36 分钟）
 
 ```bash
 cd simulation-dataset/src
 python generate_supplement.py
 ```
 
-> 生成 440 张测试图（单 220 + 双 220）与 3 个标签 CSV，输出到 `outputs/supplement/`，
+> 生成 440 张补充图（单 220 + 双 220）与 3 个标签 CSV，输出到 `outputs/supplement/`，
 > **不触碰** `outputs/dataset/`。参数网格为确定性生成，可逐位复现。
 > 方法与使用说明见 [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md)。
+
+### 4.6 启动图像参数预测平台
+
+Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。平台会检查 Python 3.11、依赖和模型文件，并在本机打开网页。手动启动与接口说明见 [`platform/README.md`](platform/README.md)。补充图的开发/封存划分记录见 [`cnn-inversion/data/supplement_split.csv`](cnn-inversion/data/supplement_split.csv)。
 
 ---
 
@@ -309,7 +313,8 @@ python generate_supplement.py
 | [`cnn-inversion/README.md`](cnn-inversion/README.md) | 成员 B 代码逐文件说明、实验任务清单与结果、复现/评估命令、产物格式 |
 | [`simulation-dataset/README.md`](simulation-dataset/README.md) | 成员 A 仿真方法、关键参数（对齐论文 Table 1）、数据集划分比例、简化假设表述规范 |
 | [`simulation-dataset/DATASET.md`](simulation-dataset/DATASET.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
-| [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md) | 补充测试数据集（440 张）：R/B 参数变异生成方法、新增 R/B 字段说明、仅测试不入训练的使用注意事项 |
+| [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md) | 440 张补充图：R/B 参数变异生成方法、开发/封存划分与使用范围 |
+| [`platform/README.md`](platform/README.md) | 平台启动、接口、验证方法与模型适用范围 |
 | [`docs/PAPER_BASIS.md`](docs/PAPER_BASIS.md) | **每条代码的论文依据**：架构块数、FC 节点数、激活函数、损失、优化器、EarlyStopping、划分比例，全部引用论文原文与页码；附 14 条论文未写明的假设（ASSUMPTION）；含 ⑦ 任务的失败与修复全过程 |
 | [`docs/TRAINING_RECORD.md`](docs/TRAINING_RECORD.md) | 7 个任务的训练与诊断全记录：多 seed 对照、patience 调优、混合螺距分类的误诊与更正、在线增强不可复现缺陷的定位与修复 |
 | [`docs/FINAL_DELIVERY.md`](docs/FINAL_DELIVERY.md) | 成员 B 最终交付说明、验收结论、不纳入正式交付的历史目录说明 |
