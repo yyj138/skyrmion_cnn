@@ -17,7 +17,7 @@
      patience set to 5 epochs) over all convolutional and fully connected
      layers" (p.3)
 
-ASSUMPTION（论文未写明，见 PAPER_BASIS.md 3.7/3.8/3.11）：
+ASSUMPTION（论文未写明，见 论文依据.md 3.7/3.8/3.11）：
 - batch_size=32；最大 epoch 数 200（早停会提前终止）；
 - 早停监控 val_loss、restore_best_weights=True（论文只说 patience=5）；
 - 回归标签 z-score 标准化（用训练集统计量），预测时反变换回真实物理量。
@@ -49,8 +49,8 @@ from data import build_data, make_dataset
 LEARNING_RATE = 0.001        # "learning rate of 0.001" (p.3)
 EARLY_STOP_PATIENCE = 5      # "patience set to 5 epochs" (p.3)
 # --- ASSUMPTION ---
-BATCH_SIZE = 32              # 见 PAPER_BASIS.md 3.7
-MAX_EPOCHS = 200             # 见 PAPER_BASIS.md 3.8
+BATCH_SIZE = 32              # 见 论文依据.md 3.7
+MAX_EPOCHS = 200             # 见 论文依据.md 3.8
 
 
 def compile_model(model, task):
@@ -75,7 +75,7 @@ def train_one(task, csv_path, image_dir, out_dir, seed, batch_size=BATCH_SIZE,
     patience: 早停 patience。论文为 5（p.3，默认值）；成员 A 的稀疏纹理
     数据上学习较慢，实测需 30 才能收敛（2026-09-08 对照实验：patience=5
     在 epoch 13 停住、test acc 0.077；patience=30 test acc 1.000，
-    详见 PAPER_BASIS.md 3.12）。该偏差属数据驱动调整，报告中应说明。
+    详见 论文依据.md 3.12）。该偏差属数据驱动调整，报告中应说明。
     """
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -167,7 +167,7 @@ def main():
     ap.add_argument("--batch-size", type=int, default=BATCH_SIZE)
     ap.add_argument("--epochs", type=int, default=MAX_EPOCHS)
     ap.add_argument("--patience", type=int, default=EARLY_STOP_PATIENCE,
-                    help="早停 patience，论文为 5；A 的稀疏纹理数据建议 30（见 PAPER_BASIS 3.12）")
+                    help="早停 patience，论文为 5；A 的稀疏纹理数据建议 30（见 论文依据 3.12）")
     aug_group = ap.add_mutually_exclusive_group()
     aug_group.add_argument(
         "--det-aug", dest="det_aug", action="store_true",

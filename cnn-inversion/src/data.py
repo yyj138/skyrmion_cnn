@@ -28,7 +28,7 @@
 - 分类类别取数据集中实际出现的 eta 值（A 的数据为 30-40 共 11 类；论文
   Fig.2h 轴为 {23,24,25,26,28,30,32,34,36,38,40} 也是 11 类——数量一致、
   具体值不同，因 ansatz 在 eta<30 无 toron。输出层 11 节点不变，见
-  PAPER_BASIS.md 2.4）。
+  论文依据.md 2.4）。
 """
 
 import numpy as np
@@ -39,7 +39,7 @@ from pathlib import Path
 AUTOTUNE = tf.data.AUTOTUNE
 
 # ---------------------------------------------------------------------------
-# ASSUMPTION（论文未写明，见 PAPER_BASIS.md 3.4/3.5）：
+# ASSUMPTION（论文未写明，见 论文依据.md 3.4/3.5）：
 # - 像素值归一化到 [0,1]（/255）。
 # - 旋转角度范围取 0-360 均匀随机（rotation 未给角度）；翻转取水平/垂直
 #   （"inversion"）。不引入缩放/裁剪/颜色扰动等任何论文未提及的变换。
@@ -49,7 +49,7 @@ AUTOTUNE = tf.data.AUTOTUNE
 def load_image(path):
     """读取单张 POM 图为 float32 灰度张量 (300,300,1)，并做每图 z-score 标准化。
 
-    ASSUMPTION（论文未写明，见 PAPER_BASIS.md 3.4）：
+    ASSUMPTION（论文未写明，见 论文依据.md 3.4）：
     先做 /255 归一化到 [0,1]，再做每图 z-score（减单图均值、除单图标准差）。
     论文未提输入预处理；每图标准化为数值必需——实测成员 A 的稀疏纹理
     （~99% 像素为零）在仅 /255 下 CNN 完全无法学习（test acc 0.00），
@@ -150,7 +150,7 @@ def get_pitch_classes(df):
 
     论文依据: 输出层 "softmax activation function with 11 nodes" (p.3)。
     数据集实际类别值以成员 A 交付为准（30-40 共 11 类，因 ansatz 在
-    eta<30 不产生 toron；论文 Fig.2h 轴为另一组 11 类值，见 PAPER_BASIS 2.4）。
+    eta<30 不产生 toron；论文 Fig.2h 轴为另一组 11 类值，见 论文依据 2.4）。
     """
     classes = sorted(int(v) for v in df["eta"].unique())
     if len(classes) != 11:
@@ -186,7 +186,7 @@ def load_dataframe(csv_path, image_dir):
     required = {"filename", "eta", "U", "free_energy"}
     missing = required - set(df.columns)
     if missing:
-        raise ValueError(f"CSV 缺少必需列 {missing}，接口约定见 PAPER_BASIS.md 第 4 节")
+        raise ValueError(f"CSV 缺少必需列 {missing}，接口约定见 论文依据.md 第 4 节")
     image_dir = Path(image_dir)
     paths = [str(image_dir / f) for f in df["filename"]]
     for p in paths:
@@ -229,7 +229,7 @@ def split_indices(n, task, seed=42):
 
     - pitch:  85% train / 15% test（"85% as a training set ... 15% test", p.3）。
       ASSUMPTION: 论文 Fig.2g 画了 validation loss 但未给验证集比例，
-      此处从训练集再划出 15% 作验证（见 PAPER_BASIS.md 3.6）。
+      此处从训练集再划出 15% 作验证（见 论文依据.md 3.6）。
     - voltage/energy: 80% train / 15% val / 5% test（p.6）。
     - mixed: 10% test，剩余按 85%/5% 划分 train/val（Fig.5b 图注）。
     """

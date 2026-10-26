@@ -1,0 +1,26 @@
+{
+  "generated_by": "simulation-dataset/src/generate_pitch_training_extension.py",
+  "rule": "single=88 originals x2; mixed=(88 originals x2)+(110 double development x2)",
+  "holdout_used": false,
+  "note": "历史文件未入库，行数与列结构一致但 sha256 不可复现；详见脚本 docstring。",
+  "files": [
+    {
+      "name": "single",
+      "rows": 176,
+      "expected_rows": 176,
+      "count_ok": true,
+      "sha256": "4fe358210797f77569a99af8d40290731360c3ea01728f681aba689ebeaec82c",
+      "historical_sha256": "648ba6b05ba9fd0884d803e98d43fe490c0179a63924bd484164680235d4241b",
+      "sha256_matches_history": false
+    },
+    {
+      "name": "mixed",
+      "rows": 396,
+      "expected_rows": 396,
+      "count_ok": true,
+      "sha256": "338aa9a3a23cbd125b22760f862bb89e0238e4fb7a17f6ae607c5bae744ecfa8",
+      "historical_sha256": "7d89eec797baff2157cce8de99b9f1235c5c492f80004291bd53f73aff00eb86",
+      "sha256_matches_history": false
+    }
+  ]
+}

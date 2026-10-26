@@ -71,9 +71,9 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │
 ├── simulation-dataset/           # ── 成员 A：物理仿真与数据集工程 ─────
 │   ├── README.md                 #   仿真方法、关键参数（论文 Table 1）、简化声明
-│   ├── DATASET.md                #   数据集交付说明：字段含义、划分比例、使用禁忌
-│   ├── SUPPLEMENT.md             #   补充测试数据集（440 张）交付说明
-│   ├── DATASET_SUPPLEMENT_REQUEST.md # 补充测试数据集需求清单（已交付）
+│   ├── 数据集说明.md                #   数据集交付说明：字段含义、划分比例、使用禁忌
+│   ├── 补充图说明.md             #   补充测试数据集（440 张）交付说明
+│   ├── 补充图需求清单.md # 补充测试数据集需求清单（已交付）
 │   ├── requirements.txt          #   numpy / matplotlib / pillow / tqdm
 │   ├── src/                      #   11 个脚本
 │   │   ├── config.py             #     全部仿真参数（对齐论文 Table 1）
@@ -99,9 +99,9 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │       └── visualizations/       #     截面图、POM gallery、标签分布、presentation/ 展示图
 │
 ├── docs/                         # ── 项目文档 ────────────────────────
-│   ├── PAPER_BASIS.md            #   每条代码的论文依据 + 14 条 ASSUMPTION
-│   ├── TRAINING_RECORD.md        #   7 个任务的训练与诊断全记录
-│   ├── FINAL_DELIVERY.md         #   成员 B 最终交付说明与验收结论
+│   ├── 论文依据.md            #   每条代码的论文依据 + 14 条 ASSUMPTION
+│   ├── 训练记录.md        #   7 个任务的训练与诊断全记录
+│   ├── 最终交付.md         #   成员 B 最终交付说明与验收结论
 │   └── 大创完整实施方案（...）.docx
 │
 ├── paper/                        # ── 参考文献 ────────────────────────
@@ -209,7 +209,7 @@ python src/train.py --task energy --csv $DS/labels/labels_mixed.csv --images $DS
 python src/train.py --task voltage --csv $DS/labels/labels_mixed.csv --images $DS/pom_images \
   --split-csv $DS/splits/split_voltage_regression_mixed.csv --out runs/mixed_voltage --patience 30
 
-# ⑦ 混合 螺距分类 —— 必须加 --det-aug，否则在线增强不可复现（见 docs/TRAINING_RECORD.md 第 7 节）
+# ⑦ 混合 螺距分类 —— 必须加 --det-aug，否则在线增强不可复现（见 docs/训练记录.md 第 7 节）
 python src/train.py --task pitch --csv $DS/labels/labels_mixed.csv --images $DS/pom_images \
   --split-csv $DS/splits/split_pitch_classification_mixed.csv --out runs/mixed_pitch_final \
   --det-aug --aug-prob 0.1 --patience 80 --epochs 45
@@ -240,7 +240,7 @@ python generate_supplement.py
 
 > 生成 440 张补充图（单 220 + 双 220）与 3 个标签 CSV，输出到 `outputs/supplement/`，
 > **不触碰** `outputs/dataset/`。参数网格为确定性生成，可逐位复现。
-> 方法与使用说明见 [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md)。
+> 方法与使用说明见 [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md)。
 
 ### 4.6 启动图像参数预测平台
 
@@ -285,7 +285,7 @@ Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。�
 
 > **补充测试数据集**（`outputs/supplement/`，440 张）：沿用上述同一方法，仅在 ansatz 几何参数
 > R（toron 半径）、B（扭转壁宽度）上做小幅变异以生成新构型，自由能对新构型重新积分；
-> 全部图片与原 968 张零重复，仅作模型泛化检验的测试数据。详见 [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md)。
+> 全部图片与原 968 张零重复，仅作模型泛化检验的测试数据。详见 [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md)。
 
 **表述规范**：
 
@@ -302,7 +302,7 @@ Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。�
 2. **②–⑥ 五个回归模型为历史冻结结果**，训练时使用旧版随机在线增强，模型与指标可交付，但从头训练不保证得到逐轮完全相同的日志。①⑦ 已切换到确定性在线增强，同 seed 可复现。
 3. **数据划分的类别覆盖**：论文 Fig.2h 的分类轴为 `{23,24,25,26,28,…}`，而本项目的 ansatz 在 η<30 时无 toron（退化为均匀指向矢场），有效 η 为 30–40 共 11 类，与论文不完全一致。
 4. **`--patience` 与论文不同**（本项目用 30 / 80，论文为 5）：稀疏 POM 纹理学习较慢，patience=5 会在 epoch 13 提前停止（acc 0.077）。属数据驱动的实现偏差。
-5. **论文正文与结构示意图对螺距模型的卷积块数存在不一致**，本项目以结构图为主要依据取 4 块，电压模型依图注取 3 块。取舍依据见 `docs/PAPER_BASIS.md`。
+5. **论文正文与结构示意图对螺距模型的卷积块数存在不一致**，本项目以结构图为主要依据取 4 块，电压模型依图注取 3 块。取舍依据见 `docs/论文依据.md`。
 
 ---
 
@@ -312,12 +312,12 @@ Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。�
 |------|------|
 | [`cnn-inversion/README.md`](cnn-inversion/README.md) | 成员 B 代码逐文件说明、实验任务清单与结果、复现/评估命令、产物格式 |
 | [`simulation-dataset/README.md`](simulation-dataset/README.md) | 成员 A 仿真方法、关键参数（对齐论文 Table 1）、数据集划分比例、简化假设表述规范 |
-| [`simulation-dataset/DATASET.md`](simulation-dataset/DATASET.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
-| [`simulation-dataset/SUPPLEMENT.md`](simulation-dataset/SUPPLEMENT.md) | 440 张补充图：R/B 参数变异生成方法、开发/封存划分与使用范围 |
+| [`simulation-dataset/数据集说明.md`](simulation-dataset/数据集说明.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
+| [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md) | 440 张补充图：R/B 参数变异生成方法、开发/封存划分与使用范围 |
 | [`platform/README.md`](platform/README.md) | 平台启动、接口、验证方法与模型适用范围 |
-| [`docs/PAPER_BASIS.md`](docs/PAPER_BASIS.md) | **每条代码的论文依据**：架构块数、FC 节点数、激活函数、损失、优化器、EarlyStopping、划分比例，全部引用论文原文与页码；附 14 条论文未写明的假设（ASSUMPTION）；含 ⑦ 任务的失败与修复全过程 |
-| [`docs/TRAINING_RECORD.md`](docs/TRAINING_RECORD.md) | 7 个任务的训练与诊断全记录：多 seed 对照、patience 调优、混合螺距分类的误诊与更正、在线增强不可复现缺陷的定位与修复 |
-| [`docs/FINAL_DELIVERY.md`](docs/FINAL_DELIVERY.md) | 成员 B 最终交付说明、验收结论、不纳入正式交付的历史目录说明 |
+| [`docs/论文依据.md`](docs/论文依据.md) | **每条代码的论文依据**：架构块数、FC 节点数、激活函数、损失、优化器、EarlyStopping、划分比例，全部引用论文原文与页码；附 14 条论文未写明的假设（ASSUMPTION）；含 ⑦ 任务的失败与修复全过程 |
+| [`docs/训练记录.md`](docs/训练记录.md) | 7 个任务的训练与诊断全记录：多 seed 对照、patience 调优、混合螺距分类的误诊与更正、在线增强不可复现缺陷的定位与修复 |
+| [`docs/最终交付.md`](docs/最终交付.md) | 成员 B 最终交付说明、验收结论、不纳入正式交付的历史目录说明 |
 
 ---
 

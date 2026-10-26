@@ -14,10 +14,10 @@ texture patterns in liquid-crystal skyrmions", Scientific Reports 15:10921 (2025
     "We have used rectified linear unit (ReLU) activation functions in all
      convolutional and fully connected layers" (p.3)
 - 块数以 visualkeras 架构图（由真实 Keras 模型生成，论文 ref.51）为准，
-  正文与图注的矛盾见 PAPER_BASIS.md 第 2 节。
+  正文与图注的矛盾见 论文依据.md 第 2 节。
 
 论文未给出的参数（滤波器数量、padding、strides、batch size 等）一律在
-PAPER_BASIS.md 第 3 节标注为 ASSUMPTION，并可在此处统一修改。
+论文依据.md 第 3 节标注为 ASSUMPTION，并可在此处统一修改。
 """
 
 import tensorflow as tf
@@ -25,7 +25,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 
 # ---------------------------------------------------------------------------
-# ASSUMPTION（论文未写明，见 PAPER_BASIS.md 3.1）：
+# ASSUMPTION（论文未写明，见 论文依据.md 3.1）：
 # 每个卷积层的滤波器数量。论文正文与架构图均未标注，此处取 32 作为默认值，
 # 可通过 build_* 的 conv_filters 参数修改。
 # ---------------------------------------------------------------------------
@@ -46,7 +46,7 @@ def _conv_block(x, filters, name):
       "blocks of two 4 x 4 convolutions and one 3 x 3 max-pooling layers" (p.3, p.5)
       "ReLU activation functions have been used after all convolution operations" (p.5)
 
-    ASSUMPTION（论文未写明，见 PAPER_BASIS.md 3.2/3.3）：
+    ASSUMPTION（论文未写明，见 论文依据.md 3.2/3.3）：
       padding='same'、strides=1。注：若用 Keras 默认 'valid'，300x300 输入经过
       4 个块后特征图尺寸降为 0（每层 4x4 卷积各减 3、3x3 池化除 3），
       与论文架构图（Fig.2f/3e 均为 4 块）无法共存，故 padding 必为 'same'。
@@ -66,7 +66,7 @@ def build_pitch_classifier(conv_filters=DEFAULT_CONV_FILTERS, n_blocks=4):
        and an output layer ... softmax activation function with 11 nodes" (p.3)
       块数 n_blocks=4：以 Fig.2f visualkeras 架构图为准（图中可辨识 4 个
       [Conv,Conv,MaxPool] 块 + Flatten + 4 个 Dense 框，与"3 FC + 输出层"吻合）。
-      注意：正文 p.3 写 "three blocks"，与图矛盾，详见 PAPER_BASIS.md 2.1。
+      注意：正文 p.3 写 "three blocks"，与图矛盾，详见 论文依据.md 2.1。
     """
     inputs = keras.Input(shape=INPUT_SHAPE, name="pom_image")
     x = inputs
@@ -91,7 +91,7 @@ def build_voltage_regressor(conv_filters=DEFAULT_CONV_FILTERS):
       "We have trained this network by optimising the mean square error" (p.5)
       注意：正文 p.5 "increased the number of blocks ... by one, reduced the
       number of fully connected layers by one" 与图注/架构图矛盾，详见
-      PAPER_BASIS.md 2.2。此处以图注+架构图为准：3 块 + 4 个 FC(32)。
+      论文依据.md 2.2。此处以图注+架构图为准：3 块 + 4 个 FC(32)。
     """
     inputs = keras.Input(shape=INPUT_SHAPE, name="pom_image")
     x = inputs

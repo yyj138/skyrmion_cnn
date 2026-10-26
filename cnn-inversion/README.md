@@ -5,7 +5,7 @@
 **论文**：Terroa, Tasinkevych & Dias, *Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions*, **Scientific Reports 15:10921 (2025)**.
 DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) ｜ 原文副本：[`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)
 
-**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`../simulation-dataset/outputs/dataset/`](../simulation-dataset/outputs/dataset/)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [`../simulation-dataset/DATASET.md`](../simulation-dataset/DATASET.md)。
+**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`../simulation-dataset/outputs/dataset/`](../simulation-dataset/outputs/dataset/)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [`../simulation-dataset/数据集说明.md`](../simulation-dataset/数据集说明.md)。
 
 ---
 
@@ -14,7 +14,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 | 文件 | 作用 |
 |------|------|
 | `src/models.py` | 3 个 Keras 模型：螺距分类器（4 块卷积 + FC(32,32,16) + softmax 11）、电压回归器（3 块 + 4×FC(32) + 线性）、自由能回归器（4 块 + FC(32,16) + 线性）。每行代码附论文出处。 |
-| `src/data.py` | 数据加载：300×300 灰度 → **per-image z-score 归一化**（稀疏 POM 纹理的关键）；rot90 + flip 增强；`augment_stateless()` 使用由样本索引派生的确定性随机序列（同 seed 跨重跑一致、逐 epoch 变化）；按 A 的 `split_*.csv` 划分。 |
+| `src/data.py` | 数据加载：300×300 灰度 → **per-image z-score 归一化**（稀疏 POM 纹理的关键）；rot90 + flip 增强（确定性路径实际为 0°/90°/180° 三档 × 4 种翻转 = 12 种组合，见 `../docs/论文依据.md` 3.15）；`augment_stateless()` 使用由样本索引派生的确定性随机序列（同 seed 跨重跑一致、逐 epoch 变化）；按 A 的 `split_*.csv` 划分。 |
 | `src/train.py` | 训练入口：Adam lr=0.001、EarlyStopping、回归标签 z-score、随机种子全栈固定、动态确定性在线增强（默认启用，`--legacy-random-aug` 可回退旧路径）。 |
 | `src/evaluate.py` | 测试集评估：loss 曲线、混淆矩阵（分类）、pred_vs_true 散点（带 1:1 线 + 标准差阴影，复刻 Fig.3d/3g 图注风格）；输出 `metrics.json`。 |
 | `src/smoke_test.py` | 端到端冒烟测试：用合成数据跑通三个模型（不需要真实数据集，秒级完成）。 |
@@ -22,7 +22,7 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 | `data/` | 成员 B 派生的数据划分表：`split_pitch_classification_single_stratified.csv`（① 任务使用，按类别分层抽样，保证 train/val/test 均覆盖全部 11 个 η 类别）。其余划分表由成员 A 提供，见 `../simulation-dataset/outputs/dataset/splits/`。 |
 | `runs/` | 7 个正式训练任务的输出，每个目录含 `model.keras`、`meta.json`、`metrics.json`、`training_log.csv`、`loss_curve.png`、`confusion_matrix.png`（分类）或 `pred_vs_true.png`（回归）。 |
 
-> 代码逐行的论文依据、14 条论文未写明的实现假设（ASSUMPTION）、⑦ 任务的失败与修复全过程见 [`../docs/PAPER_BASIS.md`](../docs/PAPER_BASIS.md)；完整训练与诊断过程见 [`../docs/TRAINING_RECORD.md`](../docs/TRAINING_RECORD.md)。
+> 代码逐行的论文依据、14 条论文未写明的实现假设（ASSUMPTION）、⑦ 任务的失败与修复全过程见 [`../docs/论文依据.md`](../docs/论文依据.md)；完整训练与诊断过程见 [`../docs/训练记录.md`](../docs/训练记录.md)。
 
 ---
 
@@ -71,7 +71,7 @@ python src/smoke_test.py
 > 论文**未给 ⑦ 的数值准确率**，仅定性 "the confusion matrix … in Fig. 5e reveals a very good agreement"（p.6–7）；可比参照为同架构的单 toron 分类 ≈0.96。
 > 注：p.7 结论段的 "coefficients of determination exceeding 0.94 in all the cases" 指**回归**，不可用作分类基准。
 
-**关于任务 7（混合螺距分类）**：历史版本曾停在约 0.09 的随机水平。排查后发现旧在线增强在多线程 `map` 中使用全局随机源，同 seed 重跑也可能得到不同增强。根因**不是数据缺陷**（双 toron 图像确实携带 η 信号），而是代码缺陷。当前正式路径改用预先生成的确定性随机序列：同 seed 跨重跑一致，同时每个 epoch 重新采样。由于混合图像对方向变换更敏感，正式重训每轮约 10% 训练样本接受确定性随机增强，其余保留原图。最终结果存放于 `runs/mixed_pitch_final/`，测试集 Accuracy = 0.9897（97 张错 1 张）。完整定位过程见 `../docs/PAPER_BASIS.md` 第 7 节。
+**关于任务 7（混合螺距分类）**：历史版本曾停在约 0.09 的随机水平。排查后发现旧在线增强在多线程 `map` 中使用全局随机源，同 seed 重跑也可能得到不同增强。根因**不是数据缺陷**（双 toron 图像确实携带 η 信号），而是代码缺陷。当前正式路径改用预先生成的确定性随机序列：同 seed 跨重跑一致，同时每个 epoch 重新采样。由于混合图像对方向变换更敏感，正式重训每轮约 10% 训练样本接受确定性随机增强，其余保留原图。最终结果存放于 `runs/mixed_pitch_final/`，测试集 Accuracy = 0.9897（97 张错 1 张）。完整定位过程见 `../docs/论文依据.md` 第 7 节。
 
 **报告建议**：
 1. 电压（单 toron）测试集仅 n=4，R² 对单点异常值敏感，建议以 **MAE 为主要汇报指标**；
@@ -128,7 +128,9 @@ python src/evaluate.py --run runs/mixed_voltage
 python src/evaluate.py --run runs/mixed_pitch_final
 ```
 
-> **补充图（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了 ansatz R/B 参数变异的新构型 POM 图。后续平台模型将其按基础构型分为开发侧 218 张和封存侧 222 张；开发侧参与训练或验证，封存侧只用于最终测试。划分见 [`data/supplement_split.csv`](data/supplement_split.csv)，字段说明见 [`../simulation-dataset/SUPPLEMENT.md`](../simulation-dataset/SUPPLEMENT.md)。原有七个正式模型没有用这些补充图训练。
+> **补充图（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了 ansatz R/B 参数变异的新构型 POM 图。后续平台模型将其按基础构型分为开发侧 218 张和封存侧 222 张；开发侧参与训练或验证，封存侧只用于最终测试。划分见 [`data/supplement_split.csv`](data/supplement_split.csv)，字段说明见 [`../simulation-dataset/补充图说明.md`](../simulation-dataset/补充图说明.md)。原有七个正式模型没有用这些补充图训练。
+>
+> **补训扩展表（2026-10-26 补建）**：`runs/supplement_*` 的 `metrics.json` 引用的 `pitch_training_extension/labels_pitch_training_{single,mixed}.csv` 原先未入库，现由 `../simulation-dataset/src/generate_pitch_training_extension.py` 按固定规则重建（176 / 396 行，仅用开发侧），行数与列结构一致但 sha256 不可逐位复现，详见 [`../simulation-dataset/补充图说明.md`](../simulation-dataset/补充图说明.md) 第 9 节。
 
 原有七个正式任务的 `runs/<task>/` 目录下的产物：
 
@@ -142,14 +144,14 @@ python src/evaluate.py --run runs/mixed_pitch_final
 | `training_log.csv` | 每个 epoch 的 train/val loss 与指标 |
 | `meta.json` | 划分表、类别表、回归标签标准化统计量、停轮 epoch（可复现凭证） |
 
-> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/TRAINING_RECORD.md` 与 `../docs/FINAL_DELIVERY.md` 中。
+> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/训练记录.md` 与 `../docs/最终交付.md` 中。
 
 ---
 
 ## 6. 相关文档
 
 - [`../README.md`](../README.md)：仓库总览（两个子项目的分工与整体结构）
-- [`../docs/PAPER_BASIS.md`](../docs/PAPER_BASIS.md)：每条代码的论文依据 + 14 条 ASSUMPTION + 缺陷记录
-- [`../docs/TRAINING_RECORD.md`](../docs/TRAINING_RECORD.md)：7 个任务的训练与诊断详细记录
-- [`../docs/FINAL_DELIVERY.md`](../docs/FINAL_DELIVERY.md)：成员 B 最终交付说明与验收结论
+- [`../docs/论文依据.md`](../docs/论文依据.md)：每条代码的论文依据 + 14 条 ASSUMPTION + 缺陷记录
+- [`../docs/训练记录.md`](../docs/训练记录.md)：7 个任务的训练与诊断详细记录
+- [`../docs/最终交付.md`](../docs/最终交付.md)：成员 B 最终交付说明与验收结论
 - [`../simulation-dataset/README.md`](../simulation-dataset/README.md)：成员 A 的物理仿真与数据集生成端

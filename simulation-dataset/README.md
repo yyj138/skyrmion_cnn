@@ -2,7 +2,7 @@
 
 复现论文：Terroa, Tasinkevych, Dias, "Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions", Scientific Reports 15:10921 (2025)，论文文件见 [`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)。
 
-本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`DATASET_SUPPLEMENT_REQUEST.md`](DATASET_SUPPLEMENT_REQUEST.md)）生成了 440 张补充 POM 图；后续使用方式见 [`SUPPLEMENT.md`](SUPPLEMENT.md)。
+本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`补充图需求清单.md`](补充图需求清单.md)）生成了 440 张补充 POM 图；后续使用方式见 [`补充图说明.md`](补充图说明.md)。
 
 ## 目录结构
 
@@ -29,12 +29,19 @@ simulation-dataset/
 │   │   ├── pom_images/                   #   440 张灰度 PNG
 │   │   ├── labels/                       #   3 个标签 csv (single/double/mixed)
 │   │   └── generation_log.txt            #   生成方法、参数与种子记录
+│   ├── testbatch_20261026/               # 给 B 的独立测试批次 (308 张，不入训练)
+│   │   ├── pom_images/                   #   308 张灰度 PNG
+│   │   ├── labels/                       #   3 个标签 csv
+│   │   ├── generation_log.txt            #   生成记录
+│   │   └── manifest.json                 #   逐文件 sha256 + 去重/规格校验
 │   └── visualizations/                   # 截面图、趋势图；presentation/ 为报告展示图
 ├── requirements.txt                      # 本子项目依赖
 ├── README.md                             # 本文件
-├── DATASET.md                            # 数据集交付说明（给成员 B）
-├── DATASET_SUPPLEMENT_REQUEST.md        # 补充图需求清单
-└── SUPPLEMENT.md                         # 补充图数据集说明（440 张，给成员 B）
+├── 数据集说明.md                            # 数据集交付说明（给成员 B）
+├── 补充图需求清单.md        # 补充图需求清单
+├── 补充图说明.md                         # 补充图数据集说明（440 张，给成员 B）
+├── 测试批次说明.md                        # 测试批次（308 张，给成员 B）
+└── 测试批次对接清单.md                    # 测试批次对接清单（给成员 B）
 ```
 
 > 原论文 PDF 统一存放在仓库顶层 [`../paper/`](../paper/) 目录。
@@ -73,6 +80,9 @@ python dataset_generator.py --mode all --n_voltages 8
 
 # 6. 补充测试数据集生成（440 张，约 36 分钟；输出到 ../outputs/supplement，不触碰 dataset/）
 python generate_supplement.py
+
+# 7. 给成员 B 的独立测试批次（308 张，约 25 分钟；输出到 ../outputs/testbatch_<日期>）
+python generate_testbatch.py
 ```
 
 > ⚠️ **务必在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`（`OUTPUT_DIR = "../outputs"`），在仓库根目录直接执行会把产物写到错误位置。
@@ -144,14 +154,16 @@ python generate_supplement.py
 - 单 toron：88 张（eta 取 30-40 共 11 值 × U 取 0-3.5V 共 8 档）
 - 双 toron：880 张（同上 × 分离距离 10 档：30-75）
 - 混合：968 张；另有 6 张 demo 小样本
-- 补充图：440 张（单 220 + 双 220；开发侧 218 张、封存侧 222 张），说明见 [SUPPLEMENT.md](SUPPLEMENT.md)
-- 标签与划分字段说明见 [DATASET.md](DATASET.md)
+- 补充图：440 张（单 220 + 双 220；开发侧 218 张、封存侧 222 张），说明见 [补充图说明.md](补充图说明.md)
+- 测试批次：308 张（单 88 + 双 220；ansatz 变体 w1/w2，**仅测试、不入训练**），说明见 [测试批次说明.md](测试批次说明.md)，交接清单见 [测试批次对接清单.md](测试批次对接清单.md)
+- 补训扩展表：单 176 行 / 混合 396 行（`outputs/pitch_training_extension/`，见 [补充图说明.md](补充图说明.md) 第 9 节）
+- 标签与划分字段说明见 [数据集说明.md](数据集说明.md)
 
 ---
 
 ## 相关文档
 
 - [`../README.md`](../README.md)：仓库总览（两个子项目的分工与整体结构）
-- [`DATASET.md`](DATASET.md)：数据集字段含义、规格与使用禁忌（团队内部数据接口约定）
-- [`SUPPLEMENT.md`](SUPPLEMENT.md)：补充测试数据集（440 张）的生成方法与使用注意
+- [`数据集说明.md`](数据集说明.md)：数据集字段含义、规格与使用禁忌（团队内部数据接口约定）
+- [`补充图说明.md`](补充图说明.md)：补充测试数据集（440 张）的生成方法与使用注意
 - [`../cnn-inversion/README.md`](../cnn-inversion/README.md)：成员 B 的 CNN 训练与评估端
