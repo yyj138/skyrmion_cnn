@@ -4,6 +4,11 @@
 
 本项目实现大创分工中成员 A 的全部代码：物理仿真（toron 解析 ansatz、Frank-Oseen 自由能、Jones 矩阵 POM 成像）、批量数据集生成、数据集划分、可视化校验，以及一个可选的 PDE 松弛求解器。产出的数据集供成员 B 训练 CNN 使用。另按团队需求（[`docs/补充图需求清单.md`](docs/补充图需求清单.md)）生成了 440 张补充 POM 图；后续使用方式见 [`docs/补充图说明.md`](docs/补充图说明.md)。
 
+成员 B 后续复用本目录的仿真方法生成了 616 张双 toron 螺距几何扩展图，
+分别用于开发训练、分组验证和独立审计；这些图与 308 张原独立测试图分开存放。
+生成参数、数据划分和模型评测见
+[`../cnn-inversion/results/双toron螺距几何泛化优化记录.md`](../cnn-inversion/results/双toron螺距几何泛化优化记录.md)。
+
 ## 目录结构
 
 ```
@@ -15,6 +20,8 @@ simulation-dataset/
 │   ├── pom_imaging.py                    # Task 2-3: Jones 矩阵 POM 成像
 │   ├── dataset_generator.py              # Task 2-4,2-5: 批量生成 + 数据集划分
 │   ├── generate_supplement.py            # 补充图生成 (440 张, ansatz R/B 变异)
+│   ├── generate_pitch_geometry_v2.py    # 双 toron 螺距几何开发图及第一版隔离图
+│   ├── generate_pitch_geometry_v3.py    # 额外训练图、第二版隔离图及固定组合审计图
 │   ├── visualize.py                      # Task 2-6: 数据校验可视化
 │   ├── pde_relaxation.py                 # 可选: PDE 松弛求解器
 │   ├── main.py                           # 模块1: 最小验证 demo
@@ -34,6 +41,11 @@ simulation-dataset/
 │   │   ├── labels/                       #   3 个标签 csv
 │   │   ├── generation_log.txt            #   生成记录
 │   │   └── manifest.json                 #   逐文件 sha256 + 去重/规格校验
+│   ├── pitch_geometry_development_v2/   # 双 toron 螺距开发图：训练 176 / 分组验证 88
+│   ├── pitch_geometry_extra_train_v3/   # 双 toron 螺距额外训练图 88 张
+│   ├── pitch_geometry_sealed_v2/        # 第一版候选的一次性隔离评测图 88 张
+│   ├── pitch_geometry_sealed_v3/        # 第二版候选的一次性隔离评测图 88 张
+│   ├── pitch_geometry_audit_v4/         # 固定电压/间距组合审计图 88 张
 │   └── visualizations/                   # 截面图、趋势图；presentation/ 为报告展示图
 ├── requirements.txt                      # 本子项目依赖
 ├── README.md                             # 本文件
