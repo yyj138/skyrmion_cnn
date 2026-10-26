@@ -86,7 +86,7 @@ python generate_supplement.py
 python generate_testbatch.py
 ```
 
-> ⚠️ **务必在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`（`OUTPUT_DIR = "../outputs"`），在仓库根目录直接执行会把产物写到错误位置。
+> **务必**在 `simulation-dataset/src/` 目录下运行**：`config.py` 中的输出路径为相对当前工作目录的 `../outputs`（`OUTPUT_DIR = "../outputs"`），在仓库根目录直接执行会把产物写到错误位置。
 
 ## 任务清单与对应文件
 
