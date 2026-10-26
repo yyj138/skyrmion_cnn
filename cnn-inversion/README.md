@@ -5,7 +5,7 @@
 **论文**：Terroa, Tasinkevych & Dias, *Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions*, **Scientific Reports 15:10921 (2025)**.
 DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) ｜ 原文副本：[`../paper/s41598-025-89699-2.pdf`](../paper/s41598-025-89699-2.pdf)
 
-**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`../simulation-dataset/outputs/dataset/`](../simulation-dataset/outputs/dataset/)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [`../simulation-dataset/数据集说明.md`](../simulation-dataset/数据集说明.md)。
+**与成员 A 的关系**：本目录可独立运行，数据来自同仓库 [`../simulation-dataset/outputs/dataset/`](../simulation-dataset/outputs/dataset/)（A 已交付：968 张 300×300 灰度 POM 图 + 4 个标签 CSV + 8 个 train/val/test 划分表）。字段含义与使用禁忌详见 [`../simulation-dataset/docs/数据集说明.md`](../simulation-dataset/docs/数据集说明.md)。
 
 ---
 
@@ -128,9 +128,9 @@ python src/evaluate.py --run runs/mixed_voltage
 python src/evaluate.py --run runs/mixed_pitch_final
 ```
 
-> **补充图（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了 ansatz R/B 参数变异的新构型 POM 图。后续平台模型将其按基础构型分为开发侧 218 张和封存侧 222 张；开发侧参与训练或验证，封存侧只用于最终测试。划分见 [`data/supplement_split.csv`](data/supplement_split.csv)，字段说明见 [`../simulation-dataset/补充图说明.md`](../simulation-dataset/补充图说明.md)。原有七个正式模型没有用这些补充图训练。
+> **补充图（2026-10 新增，440 张）**：`../simulation-dataset/outputs/supplement/` 提供了 ansatz R/B 参数变异的新构型 POM 图。后续平台模型将其按基础构型分为开发侧 218 张和封存侧 222 张；开发侧参与训练或验证，封存侧只用于最终测试。划分见 [`data/supplement_split.csv`](data/supplement_split.csv)，字段说明见 [`../simulation-dataset/docs/补充图说明.md`](../simulation-dataset/docs/补充图说明.md)。原有七个正式模型没有用这些补充图训练。
 >
-> **补训扩展表（2026-10-26 补建）**：`runs/supplement_*` 的 `metrics.json` 引用的 `pitch_training_extension/labels_pitch_training_{single,mixed}.csv` 原先未入库，现由 `../simulation-dataset/src/generate_pitch_training_extension.py` 按固定规则重建（176 / 396 行，仅用开发侧），行数与列结构一致但 sha256 不可逐位复现，详见 [`../simulation-dataset/补充图说明.md`](../simulation-dataset/补充图说明.md) 第 9 节。
+> **补训扩展表（2026-10-26 补建）**：`runs/supplement_*` 的 `metrics.json` 引用的 `pitch_training_extension/labels_pitch_training_{single,mixed}.csv` 原先未入库，现由 `../simulation-dataset/src/generate_pitch_training_extension.py` 按固定规则重建（176 / 396 行，仅用开发侧），行数与列结构一致但 sha256 不可逐位复现，详见 [`../simulation-dataset/docs/补充图说明.md`](../simulation-dataset/docs/补充图说明.md) 第 9 节。
 
 原有七个正式任务的 `runs/<task>/` 目录下的产物：
 
@@ -144,7 +144,7 @@ python src/evaluate.py --run runs/mixed_pitch_final
 | `training_log.csv` | 每个 epoch 的 train/val loss 与指标 |
 | `meta.json` | 划分表、类别表、回归标签标准化统计量、停轮 epoch（可复现凭证） |
 
-> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/训练记录.md` 与 `../docs/最终交付.md` 中。
+> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/README.md`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/训练记录.md` 与 `../docs/最终交付.md` 中。
 
 ---
 

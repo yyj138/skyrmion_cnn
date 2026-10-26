@@ -9,7 +9,7 @@
 **论文**：Terroa, Tasinkevych & Dias, *Convolutional neural network analysis of optical texture patterns in liquid-crystal skyrmions*, **Scientific Reports 15:10921 (2025)**.
 DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) ｜ 原文副本：[`paper/s41598-025-89699-2.pdf`](paper/s41598-025-89699-2.pdf)
 
-**图像参数预测平台**：平台前端、后端和启动脚本集中在 [`platform/`](platform/README.md)。Windows 可双击 `platform/start_platform.cmd` 启动本机演示。
+**图像参数预测平台**：平台前端、后端和启动脚本集中在 [`platform/README.md`](platform/README.md)。Windows 可双击 `platform/start_platform.cmd` 启动本机演示。
 
 ---
 
@@ -71,9 +71,12 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │
 ├── simulation-dataset/           # ── 成员 A：物理仿真与数据集工程 ─────
 │   ├── README.md                 #   仿真方法、关键参数（论文 Table 1）、简化声明
-│   ├── 数据集说明.md                #   数据集交付说明：字段含义、划分比例、使用禁忌
-│   ├── 补充图说明.md             #   补充测试数据集（440 张）交付说明
-│   ├── 补充图需求清单.md # 补充测试数据集需求清单（已交付）
+│   ├── docs/                     #   交付文档（数据集 / 补充图 / 测试批次，给成员 B）
+│   │   ├── 数据集说明.md          #     字段含义、划分比例、使用禁忌
+│   │   ├── 补充图说明.md          #     补充测试数据集（440 张）交付说明
+│   │   ├── 补充图需求清单.md      #     补充测试数据集需求清单（已交付）
+│   │   ├── 测试批次说明.md        #     独立测试批次（308 张）规格与实测校验
+│   │   └── 测试批次对接清单.md    #     测试批次对接清单
 │   ├── requirements.txt          #   numpy / matplotlib / pillow / tqdm
 │   ├── src/                      #   11 个脚本
 │   │   ├── config.py             #     全部仿真参数（对齐论文 Table 1）
@@ -240,7 +243,7 @@ python generate_supplement.py
 
 > 生成 440 张补充图（单 220 + 双 220）与 3 个标签 CSV，输出到 `outputs/supplement/`，
 > **不触碰** `outputs/dataset/`。参数网格为确定性生成，可逐位复现。
-> 方法与使用说明见 [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md)。
+> 方法与使用说明见 [`simulation-dataset/docs/补充图说明.md`](simulation-dataset/docs/补充图说明.md)。
 
 ### 4.6 启动图像参数预测平台
 
@@ -285,7 +288,7 @@ Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。�
 
 > **补充测试数据集**（`outputs/supplement/`，440 张）：沿用上述同一方法，仅在 ansatz 几何参数
 > R（toron 半径）、B（扭转壁宽度）上做小幅变异以生成新构型，自由能对新构型重新积分；
-> 全部图片与原 968 张零重复，仅作模型泛化检验的测试数据。详见 [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md)。
+> 全部图片与原 968 张零重复，仅作模型泛化检验的测试数据。详见 [`simulation-dataset/docs/补充图说明.md`](simulation-dataset/docs/补充图说明.md)。
 
 **表述规范**：
 
@@ -312,8 +315,8 @@ Windows 双击 [`platform/start_platform.cmd`](platform/start_platform.cmd)。�
 |------|------|
 | [`cnn-inversion/README.md`](cnn-inversion/README.md) | 成员 B 代码逐文件说明、实验任务清单与结果、复现/评估命令、产物格式 |
 | [`simulation-dataset/README.md`](simulation-dataset/README.md) | 成员 A 仿真方法、关键参数（对齐论文 Table 1）、数据集划分比例、简化假设表述规范 |
-| [`simulation-dataset/数据集说明.md`](simulation-dataset/数据集说明.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
-| [`simulation-dataset/补充图说明.md`](simulation-dataset/补充图说明.md) | 440 张补充图：R/B 参数变异生成方法、开发/封存划分与使用范围 |
+| [`simulation-dataset/docs/数据集说明.md`](simulation-dataset/docs/数据集说明.md) | 数据集字段含义、图片规格、使用禁忌（团队内部数据接口约定） |
+| [`simulation-dataset/docs/补充图说明.md`](simulation-dataset/docs/补充图说明.md) | 440 张补充图：R/B 参数变异生成方法、开发/封存划分与使用范围 |
 | [`platform/README.md`](platform/README.md) | 平台启动、接口、验证方法与模型适用范围 |
 | [`docs/论文依据.md`](docs/论文依据.md) | **每条代码的论文依据**：架构块数、FC 节点数、激活函数、损失、优化器、EarlyStopping、划分比例，全部引用论文原文与页码；附 14 条论文未写明的假设（ASSUMPTION）；含 ⑦ 任务的失败与修复全过程 |
 | [`docs/训练记录.md`](docs/训练记录.md) | 7 个任务的训练与诊断全记录：多 seed 对照、patience 调优、混合螺距分类的误诊与更正、在线增强不可复现缺陷的定位与修复 |
