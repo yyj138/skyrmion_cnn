@@ -32,7 +32,7 @@ class SkyrmionPredictor:
             CNN_ROOT / "runs/supplement_geometry_v1/pitch_final/model.keras", compile=False
         )
         self.pitch_mixed = tf.keras.models.load_model(
-            CNN_ROOT / "runs/supplement_geometry_v1/mixed_pitch_final/model.keras", compile=False
+            CNN_ROOT / "runs/geometry_double_pitch_v3/model.keras", compile=False
         )
         self.voltage = tf.keras.models.load_model(
             CNN_ROOT / "runs/supplement_voltage_v1/mixed_voltage/model.keras", compile=False

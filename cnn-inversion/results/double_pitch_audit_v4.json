@@ -1,0 +1,40 @@
+{
+  "purpose": "audit with fixed voltage and separation assignments across eta",
+  "dataset": "simulation-dataset\\outputs\\pitch_geometry_audit_v4",
+  "old_model": "cnn-inversion\\runs\\supplement_geometry_v1\\mixed_pitch_final\\model.keras",
+  "candidate_model": "cnn-inversion\\runs\\geometry_double_pitch_v3\\model.keras",
+  "groups": {
+    "old": {
+      "g_13.3_0.50": {
+        "n": 44,
+        "correct": 36,
+        "accuracy": 0.8181818181818182,
+        "within_one": 1.0,
+        "mean_abs_eta_error": 0.18181818181818182
+      },
+      "g_15.5_0.50": {
+        "n": 44,
+        "correct": 2,
+        "accuracy": 0.045454545454545456,
+        "within_one": 0.4318181818181818,
+        "mean_abs_eta_error": 1.8409090909090908
+      }
+    },
+    "candidate": {
+      "g_13.3_0.50": {
+        "n": 44,
+        "correct": 33,
+        "accuracy": 0.75,
+        "within_one": 1.0,
+        "mean_abs_eta_error": 0.25
+      },
+      "g_15.5_0.50": {
+        "n": 44,
+        "correct": 27,
+        "accuracy": 0.6136363636363636,
+        "within_one": 0.9090909090909091,
+        "mean_abs_eta_error": 0.5227272727272727
+      }
+    }
+  }
+}

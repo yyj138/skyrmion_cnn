@@ -1,0 +1,136 @@
+{
+  "purpose": "one-time sealed evaluation",
+  "generator": "simulation-dataset/src/generate_pitch_geometry_v2.py",
+  "groups": {
+    "train": [
+      [
+        13.0,
+        0.42
+      ],
+      [
+        13.0,
+        0.58
+      ],
+      [
+        15.8,
+        0.42
+      ],
+      [
+        15.8,
+        0.58
+      ]
+    ],
+    "val": [
+      [
+        13.6,
+        0.52
+      ],
+      [
+        15.2,
+        0.48
+      ]
+    ],
+    "sealed": [
+      [
+        14.2,
+        0.44
+      ],
+      [
+        14.6,
+        0.56
+      ]
+    ]
+  },
+  "images": 88,
+  "elapsed_seconds": 160.4,
+  "sha256": {
+    "double_eta30_U0.00_sep30_g_14.2_0.44.png": "3097a8ed57a32c6d6fdd4692d7249457125ce79b2077368e15f927818558281f",
+    "double_eta30_U0.00_sep75_g_14.6_0.56.png": "48a21b27e5ea4a3fbbccb22d5a06fde78c755fb31c4d64ca58cdfe89fa5b17ba",
+    "double_eta30_U1.00_sep30_g_14.6_0.56.png": "635528d2e68d424366643dfeb78178fdd8ed779dede66d96f5069acacccee874",
+    "double_eta30_U1.00_sep45_g_14.2_0.44.png": "70309a170af85e4c3dbd8f584cd77330c386dd0d4d56c8d66587dcb7cdcf562a",
+    "double_eta30_U2.50_sep45_g_14.6_0.56.png": "cd58ef1caacf9af7127e10d9f0d938ab3468ae40f592f7687b7e91d8e3db30f6",
+    "double_eta30_U2.50_sep60_g_14.2_0.44.png": "80f5111252ab35a9697ad2937a7d6cbf131b5a23e96244b9c028f89af4b5d99e",
+    "double_eta30_U3.50_sep60_g_14.6_0.56.png": "38615ef6405c43948fb6081db2d4d5286865b17384f516b8e466407d572c4f47",
+    "double_eta30_U3.50_sep75_g_14.2_0.44.png": "acd5ead03a6307aee90db67cbb04aeb5ae71f0bade057ac276e280d1c048add0",
+    "double_eta31_U0.00_sep60_g_14.6_0.56.png": "a5a825aacfc917cdd2a996465b38928655337ba5d1a2c8f24df24af3725e5e1d",
+    "double_eta31_U0.00_sep75_g_14.2_0.44.png": "b9659f5e46e11c94f8f140354f2360cc594724b89c8e6ccdd3f6ce234795402b",
+    "double_eta31_U1.00_sep30_g_14.2_0.44.png": "47f44c5ac97560f61b8cb8e78b0c7b74bc8adb35999cb316c6fb3819402a7970",
+    "double_eta31_U1.00_sep75_g_14.6_0.56.png": "5fba10fb21903167193ef86bf2cf45136caa5f0631d7ba8f526ea5d9e6114b88",
+    "double_eta31_U2.50_sep30_g_14.6_0.56.png": "3d8c31d2302654292947856310dd73606ba5c19fdabb35311b5b6bd700327db9",
+    "double_eta31_U2.50_sep45_g_14.2_0.44.png": "b82333dbd688f54c83a79631f93a21304a14037f7aefec794498c50a28625c03",
+    "double_eta31_U3.50_sep45_g_14.6_0.56.png": "ed5cbc1ae924a565154065d0e3d41e437c85cd76c2ba24809185f45e1c27a360",
+    "double_eta31_U3.50_sep60_g_14.2_0.44.png": "6f64b23091383f679b0782ec20a6a97fe95ea0496502b7e83c5563d012c151ab",
+    "double_eta32_U0.00_sep45_g_14.6_0.56.png": "61c87631b839a8774a3c1fe64ffe37da7c897e40f1951ab1eee124d281f79b28",
+    "double_eta32_U0.00_sep60_g_14.2_0.44.png": "6c7328a3df54692be0520961b332a82042c8f1f6c53fef12c686986fd767bb98",
+    "double_eta32_U1.00_sep60_g_14.6_0.56.png": "ed9891e6f6db882efd60a89ab9ff0bb5b3122d360b5750192565d1de66560638",
+    "double_eta32_U1.00_sep75_g_14.2_0.44.png": "2d62011a8bc86791cff82c6151179917d691988039b21c2aa9624dcec3dd6cfc",
+    "double_eta32_U2.50_sep30_g_14.2_0.44.png": "212c649b478262a4819034c5eabe86ec476dd46dfdac3274c7c3c91282b8f081",
+    "double_eta32_U2.50_sep75_g_14.6_0.56.png": "b45ec64b59d40ee9e21a7688d75e603ecc50f46d32eea54b300d82e93c60e41f",
+    "double_eta32_U3.50_sep30_g_14.6_0.56.png": "0db688305007cadbe35f3e3606559725481d7a60457214e4c199146f1d405743",
+    "double_eta32_U3.50_sep45_g_14.2_0.44.png": "adad98934f715e7102d9c1c03fe9fcce6aa509bf78d6718fae6bd8f337046d7f",
+    "double_eta33_U0.00_sep30_g_14.6_0.56.png": "aee638eaa39ec8c1de853b1f9ca1f32b402575545b85d42104165c6fc55806eb",
+    "double_eta33_U0.00_sep45_g_14.2_0.44.png": "ac6757300ad5aa677475683c3eb8d3f0c68d91315f84129562c6f28e8324b6ff",
+    "double_eta33_U1.00_sep45_g_14.6_0.56.png": "00fc14d3297c406a35a663bdc0688a97a86a7d5037a8ec5420294bd9dfae80d2",
+    "double_eta33_U1.00_sep60_g_14.2_0.44.png": "bc101d2ac0a5d13f199d5187163cdbb580a338787b2da4e4cbc441250ab0c51e",
+    "double_eta33_U2.50_sep60_g_14.6_0.56.png": "2262394e9f87ea64ae35f861517594e8920508994f0ad31488bc5abaf7b00920",
+    "double_eta33_U2.50_sep75_g_14.2_0.44.png": "b689ba13c7cbc36069ad530a1f23e93d36156d7eca04388ec08ca7dfb9ba1376",
+    "double_eta33_U3.50_sep30_g_14.2_0.44.png": "707d9946faa7fa136a84f7fee9b8804a0c1d9d970e11fd7835d1e4fc3e1d01d1",
+    "double_eta33_U3.50_sep75_g_14.6_0.56.png": "52bcc804401b9e75ebce9f580d6d6fbc3e37ed731fc54051f5b225655e1a527c",
+    "double_eta34_U0.00_sep30_g_14.2_0.44.png": "a74e6d300ee72edcb8a76cb4b209c9372f8784e950f897fb367ffd86453cdc87",
+    "double_eta34_U0.00_sep75_g_14.6_0.56.png": "80d6c05efa9eda07933582dce0244eed2c8c9fb7ce483f89cb835e17ed820f58",
+    "double_eta34_U1.00_sep30_g_14.6_0.56.png": "e4d212aa44269fdb720f2b09419293e64738fe53bdcf0d3a06cc7e5acfa4718a",
+    "double_eta34_U1.00_sep45_g_14.2_0.44.png": "fabcfba1ce5da5d764187a0747f6b54e991f23089940897d7965d2f1458295c7",
+    "double_eta34_U2.50_sep45_g_14.6_0.56.png": "1acdd89baed04c7623f5a299bc2abddc008855020a3a632201da5c2602713ac7",
+    "double_eta34_U2.50_sep60_g_14.2_0.44.png": "363818192d2d382233c6ceede9320392a6279a2e580adff3ae8ea39304896366",
+    "double_eta34_U3.50_sep60_g_14.6_0.56.png": "d1e20932abe92be68cb07a9626de4bbcd08b4ca74908d4934bcf6f80123083ec",
+    "double_eta34_U3.50_sep75_g_14.2_0.44.png": "b4bba40a7fcaadce7a39a90436590eadc413e4d28a09b5ecbee2310f8f7f5d42",
+    "double_eta35_U0.00_sep60_g_14.6_0.56.png": "db441744bb774d1f1d4a883e58a0898c14df6a5f607fd55bc0e0d305acf7f30a",
+    "double_eta35_U0.00_sep75_g_14.2_0.44.png": "8948938b3f4ef7accf8c6da17353d0cab9852661289f1eeb3813273ad32d8a84",
+    "double_eta35_U1.00_sep30_g_14.2_0.44.png": "5f110ab12534b90cfe4b7004472eb160ccfc6ff278be868cb38a928b003ac099",
+    "double_eta35_U1.00_sep75_g_14.6_0.56.png": "77634a4abfb69f756d0ee303c2692557e421042aeb52e25e4103c549fca3cd79",
+    "double_eta35_U2.50_sep30_g_14.6_0.56.png": "3887b1155bdd31d9478bbf1e67d62b27132054c80911b9e4b601108f25a3a4e8",
+    "double_eta35_U2.50_sep45_g_14.2_0.44.png": "03a12802cc96826386311714c3c28ca0e2ca28c4e7ebaf609fd6e9f92ddd1fe3",
+    "double_eta35_U3.50_sep45_g_14.6_0.56.png": "a231c66643777dada73c8b51d3bdc33683552661cf8dcc178894c243b098f12e",
+    "double_eta35_U3.50_sep60_g_14.2_0.44.png": "40662ac3ee467852fc9485e338c913a1880b0907b12fc856c85650c3d6cfe01e",
+    "double_eta36_U0.00_sep45_g_14.6_0.56.png": "a6f55b252d5fe9c140774d2588c3b76795800377a89752a28e79428c342e56c6",
+    "double_eta36_U0.00_sep60_g_14.2_0.44.png": "7a2e318104bcb4e8a760d0596d679fbc05b09a7b5670671636c29660d012626f",
+    "double_eta36_U1.00_sep60_g_14.6_0.56.png": "8e07e13956678330bdd8355ad1709f625609d666d7c6073c67b372f99a34a9f1",
+    "double_eta36_U1.00_sep75_g_14.2_0.44.png": "869f6eb41e54eec8c2c9316f9016e93c8299ceff354afe1ad539e5744635c5d0",
+    "double_eta36_U2.50_sep30_g_14.2_0.44.png": "95a6303c95f4099f53eef96858f8087fce9ea26dd788c2971d68a36258005ea6",
+    "double_eta36_U2.50_sep75_g_14.6_0.56.png": "f9a5c7dd7f6a3ab821acc52c013130ca2438ae973fc21e865d9380cb023f7a1c",
+    "double_eta36_U3.50_sep30_g_14.6_0.56.png": "e7e5b46043639f27fa0765fb35c5de9163daa0c826756be511c323c65e48f345",
+    "double_eta36_U3.50_sep45_g_14.2_0.44.png": "693332e39a5b360398fea9a7cc569b8a599f2cc2154d95073e39b019f56cb8e7",
+    "double_eta37_U0.00_sep30_g_14.6_0.56.png": "9be0fa93cea729dbe09477f9afae0846220424d41e18bace371eeb6472ad33bd",
+    "double_eta37_U0.00_sep45_g_14.2_0.44.png": "971a9a762f92bc1feab1f84569cf7d78660faab0a6a4f3bac438378fb303f6a6",
+    "double_eta37_U1.00_sep45_g_14.6_0.56.png": "d8c1f99f7fd324002b80e1184b221fa5cab1190a175e36f11a387061c509a28f",
+    "double_eta37_U1.00_sep60_g_14.2_0.44.png": "fc5bba6d56f5a93364a6f56d29327bc4dab0281ac61f464a7c78ed3326ccddea",
+    "double_eta37_U2.50_sep60_g_14.6_0.56.png": "24ea08de84735a2cb65df5582088089a16b2b7c4856d5a7fcf611c95470a197d",
+    "double_eta37_U2.50_sep75_g_14.2_0.44.png": "a724c160ad60f0cc4f9e1f82a73d3da16b73f0eb4bb28e7a8afb77c44805d113",
+    "double_eta37_U3.50_sep30_g_14.2_0.44.png": "6241e8fb240563a709db94fcf427bbdd9237ba95390c92ae14a229d3536394c4",
+    "double_eta37_U3.50_sep75_g_14.6_0.56.png": "5ef27e6ed9aadaa04073e8087875b6306a5e851e822051401f0c0005ef1b1741",
+    "double_eta38_U0.00_sep30_g_14.2_0.44.png": "fa5023024b77ccfee1d7a837d5e55aa813913496cd0926aa1821d938ff1240d0",
+    "double_eta38_U0.00_sep75_g_14.6_0.56.png": "1c7e255c2f13eb6d8272ad459aeefc3e10b2e0f3b4c4d7916b92d03ee84043f2",
+    "double_eta38_U1.00_sep30_g_14.6_0.56.png": "80a2da5db7a4568381203652e3b4068c743e032207fe762fab401be40de09bec",
+    "double_eta38_U1.00_sep45_g_14.2_0.44.png": "9bd6e4e5ce4540a14d9725a92d8d44904d907746a1558ebc0af1baedf323b3c2",
+    "double_eta38_U2.50_sep45_g_14.6_0.56.png": "ec56788ef2c753f9b8ee3e3728840ce73d84ae9d44aa088e80993408629b7b90",
+    "double_eta38_U2.50_sep60_g_14.2_0.44.png": "5f3e1ed9cb855588341c9d8f9b4b801c9ec5cce2c005c4d869d508c5792d0a5a",
+    "double_eta38_U3.50_sep60_g_14.6_0.56.png": "ff89cd2f7bd2f98660e6cae72b215c7a1db17ba4721a98e81dcc6fb240d26912",
+    "double_eta38_U3.50_sep75_g_14.2_0.44.png": "097b056c188e3543fe3008193cee1f97fad8c4595f4b4b5b666f011e0cef82ab",
+    "double_eta39_U0.00_sep60_g_14.6_0.56.png": "5f2da0d8cc99c0b89da16c02830f560dd85a2d5d4ea283af3cf22464dfe5a88b",
+    "double_eta39_U0.00_sep75_g_14.2_0.44.png": "1ca7cc269e23bafb51f2259337a74f2db88b0e374a89e223614c6313fdc8fe9a",
+    "double_eta39_U1.00_sep30_g_14.2_0.44.png": "b48a611d7d9a090f47018e8602b9ce2f51890f75a8f17c795267c06a9d7cfc89",
+    "double_eta39_U1.00_sep75_g_14.6_0.56.png": "d3ed18733a11179398e6c574f86ecdc224ae8b986b886ad8c3a4029529fce90a",
+    "double_eta39_U2.50_sep30_g_14.6_0.56.png": "63a4bf506d22e291107c88436d8a1ed67bfbedcc7a64f165a7140b913fb2e28f",
+    "double_eta39_U2.50_sep45_g_14.2_0.44.png": "5b32f2c9d7a688c484dc828769a9840e876471f0ff19f0a80bd6afe2bf12dbb2",
+    "double_eta39_U3.50_sep45_g_14.6_0.56.png": "419bd161267801605338f6617dec8836bd17cd6908ffe624054076d15755c978",
+    "double_eta39_U3.50_sep60_g_14.2_0.44.png": "acd5607d879cf18547e0a290b6b8efe15944a54690c9380e0827b49e3d8bab75",
+    "double_eta40_U0.00_sep45_g_14.6_0.56.png": "5d0df48f791249ccd90fc639f3f8b30d36bf1e30fa708328150375726303317b",
+    "double_eta40_U0.00_sep60_g_14.2_0.44.png": "d28fd9d9f64f8b4941b64091c302abe0a5a408b89d4ebc4510504575ceace133",
+    "double_eta40_U1.00_sep60_g_14.6_0.56.png": "5c71218730bec16d1308bb89c3d534cb3fdd3653e7809e05c2dd72950dc5c654",
+    "double_eta40_U1.00_sep75_g_14.2_0.44.png": "1b8791e98323524deaedcba1f34b6fe718b82d3c744f6a01a4fed7274a49ff8d",
+    "double_eta40_U2.50_sep30_g_14.2_0.44.png": "0b6ce084914337568b4929eaf9ab09434cbe08a37862c966664ff55862af14f3",
+    "double_eta40_U2.50_sep75_g_14.6_0.56.png": "21d869aef3fc6bf42248a67d7779f83f2e00d161f1ae442c7510b657c04f1ded",
+    "double_eta40_U3.50_sep30_g_14.6_0.56.png": "2fa65fdb71c859b52d5e8d174b27584dc371202c2d93f646d09b93c31700c54d",
+    "double_eta40_U3.50_sep45_g_14.2_0.44.png": "0ad879412e6bdee4d2b1fa83092102857a0c0aa43bd56eb9bbea076cb5659353"
+  }
+}

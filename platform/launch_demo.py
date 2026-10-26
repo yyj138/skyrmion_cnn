@@ -20,7 +20,7 @@ LOCAL_HTTP = build_opener(ProxyHandler({}))
 REQUIRED_FILES = [
     "cnn-inversion/runs/supplement_router_v1/model.keras",
     "cnn-inversion/runs/supplement_geometry_v1/pitch_final/model.keras",
-    "cnn-inversion/runs/supplement_geometry_v1/mixed_pitch_final/model.keras",
+    "cnn-inversion/runs/geometry_double_pitch_v3/model.keras",
     "cnn-inversion/runs/supplement_voltage_v1/mixed_voltage/model.keras",
     "cnn-inversion/runs/mixed_energy/model.keras",
     "cnn-inversion/runs/mixed_pitch_final/meta.json",

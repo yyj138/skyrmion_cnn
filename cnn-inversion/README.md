@@ -144,7 +144,7 @@ python src/evaluate.py --run runs/mixed_pitch_final
 | `training_log.csv` | 每个 epoch 的 train/val loss 与指标 |
 | `meta.json` | 划分表、类别表、回归标签标准化统计量、停轮 epoch（可复现凭证） |
 
-> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/README.md`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/训练记录.md` 与 `../docs/最终交付.md` 中。
+> `runs/` 包含上述 7 个**正式**运行结果，以及供 [`../platform/README.md`](../platform/README.md) 使用的 `supplement_router_v1/`、`supplement_geometry_v1/`、`supplement_voltage_v1/` 补训模型和 `geometry_double_pitch_v3/` 双 toron 螺距模型。`geometry_double_pitch_v2/` 是未采用的对照实验；优化过程见 [`results/双toron螺距几何泛化优化记录.md`](results/双toron螺距几何泛化优化记录.md)。历史对照目录（`mixed_pitch_v2/`）、旧划分目录（`pitch/`）与中断训练目录未纳入仓库；原有七个任务的复盘记录保留在 `../docs/训练记录.md` 与 `../docs/最终交付.md` 中。
 
 ---
 

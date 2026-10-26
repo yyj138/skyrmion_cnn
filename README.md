@@ -55,7 +55,8 @@ DOI: [10.1038/s41598-025-89699-2](https://doi.org/10.1038/s41598-025-89699-2) �
 │       ├── mixed_voltage/        #     ⑥ 混合 电压回归
 │       ├── mixed_pitch_final/    #     ⑦ 混合 螺距分类
 │       ├── supplement_router_v1/ #    平台单/双 toron 类型判断模型
-│       ├── supplement_geometry_v1/ # 平台单、双 toron 螺距模型
+│       ├── supplement_geometry_v1/ # 平台单 toron 螺距模型；双 toron 旧权重留档
+│       ├── geometry_double_pitch_v3/ # 平台双 toron 螺距模型
 │       └── supplement_voltage_v1/ #  平台电压模型
 │
 ├── platform/                     # ── 图像参数预测平台 ────────────────

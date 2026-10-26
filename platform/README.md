@@ -1,6 +1,6 @@
 # 图像参数预测平台
 
-本平台用于大创项目中期答辩演示：选择内置单、双 toron 模拟 POM 图，或上传一张 300×300 的 PNG/JPEG 图像，即自动调用 [`predictor.py`](predictor.py) 中的 `SkyrmionPredictor`，展示类型、螺距 η、预测电压和模拟自由能。内置示例的标注值可在结果下方展开对照。平台推理代码沿用项目补训版本的推理流程；四个补训模型保存在 `../cnn-inversion/runs/supplement_*/`，第五个自由能模型沿用仓库已有权重。
+本平台用于大创项目中期答辩演示：选择内置单、双 toron 模拟 POM 图，或上传一张 300×300 的 PNG/JPEG 图像，即自动调用 [`predictor.py`](predictor.py) 中的 `SkyrmionPredictor`，展示类型、螺距 η、预测电压和模拟自由能。内置示例的标注值可在结果下方展开对照。平台的双 toron 螺距模型使用几何参数扩展训练后的 `geometry_double_pitch_v3`；单 toron 螺距、类型路由和电压仍使用补训模型，自由能沿用原有模型。训练与验证记录见 [`../cnn-inversion/results/双toron螺距几何泛化优化记录.md`](../cnn-inversion/results/双toron螺距几何泛化优化记录.md)。
 
 ## 本机启动
 
